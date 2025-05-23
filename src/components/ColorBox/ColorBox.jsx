@@ -6,17 +6,35 @@ export default class ColorBox extends Component{
   constructor(props){
     super(props)
 
+    this.state = ({
+      copied:false
+    })
+
     this.handleCopy=this.handleCopy.bind(this)
   }
 
   handleCopy(){
     {navigator.clipboard.writeText(this.props.background)}
+
+    this.setState({copied:true},
+      ()=>{
+        setTimeout(() => {
+        this.setState({copied:false})
+      }, 1500);
+    });
   }
 
   render(){
     const {name,background} = this.props
+    const {copied} = this.state
     return(
       <div onClick={this.handleCopy} style={{background}} className={styles.colorBox}>
+        <div style={{background}} 
+            className={`${styles.copy_overlay} ${copied && styles.show}`}/>
+        <div className={`${styles.copiedMessage} ${copied && styles.show}`}>
+          <h1>Copied!</h1>
+          <p>{this.props.background}</p>
+        </div>
         <div className={styles.copy_container}>
           <div className={styles.box_content}>
             <span>{this.props.name}</span>
