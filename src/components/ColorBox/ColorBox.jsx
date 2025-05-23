@@ -14,7 +14,7 @@ export default class ColorBox extends Component{
   }
 
   handleCopy(){
-    {navigator.clipboard.writeText(this.props.background)}
+    {navigator.clipboard.writeText(this.props.background)} //copia algo al clipboard
 
     this.setState({copied:true},
       ()=>{
