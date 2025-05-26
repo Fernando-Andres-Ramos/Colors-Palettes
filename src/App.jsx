@@ -20,7 +20,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<PaletteList palettes={seedColors}/>}/>
-       <Route 
+      <Route 
         exact path="/palette/:id" 
         element={<Palette 
                     palette={generatePalette(
@@ -28,6 +28,7 @@ function App() {
                     )}/>
                 }
       />
+      <Route exact path="/palette/:id/:colorId" element={<h1>Single Color Page!</h1>}/>
       <Route path="*" element={<Navigate to="/"/>} />
     </Routes>
   )

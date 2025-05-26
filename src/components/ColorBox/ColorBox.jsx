@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './ColorBox.module.css'
+import {Link} from 'react-router-dom'
 
 
 export default class ColorBox extends Component{
@@ -41,7 +42,12 @@ export default class ColorBox extends Component{
           </div>
           <button className={styles.copy_button}>Copy</button>
         </div>
-        <span className={styles.seeMore}>More</span>
+        <Link 
+          to={"/"} 
+          onClick={(e)=>e.stopPropagation()} 
+          className={styles.seeMore}>
+            More
+        </Link>
       </div>
     )
   }
