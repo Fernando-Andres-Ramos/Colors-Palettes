@@ -12,7 +12,7 @@ export default class Navbar extends Component{
   constructor(props){
     super(props)
 
-    this.state = {format:"hex", open:true}
+    this.state = {format:"hex", open:false}
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSelectChange = this.handleSelectChange.bind(this)
