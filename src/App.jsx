@@ -1,5 +1,6 @@
 import './App.css'
 import Palette from './components/Palette/Palette.jsx'
+import PaletteList from './components/PaletteList/PaletteList.jsx'
 import seedColors from './utilities/seedColors.js'
 import {generatePalette} from './utilities/colorHelpers.js'
 import {Route, Routes, Navigate, useLocation} from 'react-router-dom'
@@ -7,7 +8,8 @@ import {Route, Routes, Navigate, useLocation} from 'react-router-dom'
 function App() {
   const location = useLocation();
   const pathSegments = location.pathname.split("/")
-  const id = pathSegments[2]; 
+  const id = pathSegments[2] || "flat-ui-colors-french"; 
+  
 
   function findPalette(idToFind){
     return seedColors.find(function(palette){
@@ -17,7 +19,7 @@ function App() {
 
   return (
     <Routes>
-      <Route exact path="/" element={<h1>Palette list goes here</h1>}/>
+      <Route exact path="/" element={<PaletteList palettes={seedColors}/>}/>
        <Route 
         exact path="/palette/:id" 
         element={<Palette 
@@ -25,7 +27,8 @@ function App() {
                       findPalette(id)
                     )}/>
                 }
-      /> 
+      />
+      <Route path="*" element={<Navigate to="/"/>} />
     </Routes>
   )
 }
