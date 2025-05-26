@@ -35,7 +35,7 @@ export default class Palette extends Component{
     return(
       <div className={styles.palette}>
         <Navbar 
-          defaultpalleteNameValue={level} 
+          defaultValue={level} 
           changeLevel={this.changeLevel} 
           changeSelectValue={this.changeSelectValue}/>
         <div className={styles.palette_colors}>{colorBoxes}</div>
