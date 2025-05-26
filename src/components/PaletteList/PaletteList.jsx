@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import styles from './PaletteList.module.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import { css} from '@emotion/react'
 import styled from '@emotion/styled'
@@ -33,7 +33,6 @@ const Palettes = styled.div`
   grid-template-columns: repeat(3,30%);
   grid-gap: 5%;
 `
-
 const Title = styled.h1`
   width: 100%;
   color: white;
@@ -41,25 +40,29 @@ const Title = styled.h1`
   font-weight: 800;
 `
 
-class PaletteList extends Component{
+function PaletteList(props){
 
-  render(){
-    const {palettes} = this.props
-    return(
-      <Root>
-        <PaletteList_Container>
-          <PaletteList_Nav>
-            <Title>React Colors</Title>
-          </PaletteList_Nav>
-          <Palettes>
-            {palettes.map(palette=>
-              <MiniPalette {...palette}/>
-            )}
-          </Palettes>
-        </PaletteList_Container>
-      </Root>
-    )
-  }
+  const [id, setId] = useState("")
+  const navigate = useNavigate()
+
+  const {palettes} = props
+  return(
+    <Root>
+      <PaletteList_Container>
+        <PaletteList_Nav>
+          <Title>React Colors</Title>
+        </PaletteList_Nav>
+        <Palettes> 
+          {palettes.map(palette => 
+            <Link 
+              to={`/palette/${palette.id}`}
+              key={palette.id}>
+              <MiniPalette {...palette}/></Link>
+          )}
+        </Palettes>
+      </PaletteList_Container>
+    </Root>
+  )
 }
 
 export default PaletteList
