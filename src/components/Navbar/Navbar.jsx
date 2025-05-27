@@ -35,24 +35,28 @@ export default class Navbar extends Component{
   
 
   render(){
-    const {defaultValue} = this.props
+    const {defaultValue, isSingleColor} = this.props
     return(
       <header className={styles.navbar}>
         <div className={styles.logo}>
           <Link to="/">ReactColorPicker</Link>
         </div>
-        <div className={styles.textAndSlider_container}>
-          <span>Level: {defaultValue}</span>
-          <div className={styles.slider_container}>
-            <input type="range" 
-              min="100" 
-              max="900" 
-              defaultValue={`${defaultValue}`} 
-              onChange={this.handleChange}
-              step="100"
-              className={styles.slider}/>
-          </div>
-        </div>
+        {
+          isSingleColor && (
+            <div className={styles.textAndSlider_container}>
+              <span>Level: {defaultValue}</span>
+              <div className={styles.slider_container}>
+                <input type="range" 
+                  min="100" 
+                  max="900" 
+                  defaultValue={`${defaultValue}`} 
+                  onChange={this.handleChange}
+                  step="100"
+                  className={styles.slider}/>
+              </div>
+            </div>
+          )
+        }
         <div className={styles.select_container}>
           <Select value={this.state.format} onChange={this.handleSelectChange}>
             <MenuItem value="hex">HEX - #ffffff</MenuItem>
