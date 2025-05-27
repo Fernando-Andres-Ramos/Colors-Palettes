@@ -51,6 +51,14 @@
   text-transform: uppercase;
 }
 
+.light_text{
+  color:white
+}
+
+.colorBox .dark_text{
+  color:rgba(0,0,0,0.6)
+}
+
 .seeMore{
   background-color: rgba(255,255,255,0.3);
   position: absolute;
@@ -63,6 +71,7 @@
   text-align: center;
   line-height: 30px;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .copy_overlay{

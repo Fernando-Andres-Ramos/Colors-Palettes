@@ -3,6 +3,7 @@ import { css} from '@emotion/react'
 import styled from '@emotion/styled'
 
 
+
 const Root = styled.div`
   height: 100%;
   background-color: white;
@@ -34,6 +35,7 @@ const Title= styled.h5`
   padding: 0.5rem;
   font-size: 1rem;
   position: relative;
+  text-decoration:none;
 `
 
 const Emoji= styled.span`
@@ -62,12 +64,12 @@ function MiniPalette(props){
   const {paletteName,emoji} = props 
   return(
   <Root>
-    <Colors className="colors" >
+    <Colors>
       {MiniColorBoxes}
     </Colors>
-    <Title className="title">
+    <Title>
       {paletteName}
-      <Emoji className="emoji">{emoji}</Emoji>
+      <Emoji>{emoji}</Emoji>
     </Title>
   </Root>
   )
