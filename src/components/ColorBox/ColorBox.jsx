@@ -26,10 +26,13 @@ export default class ColorBox extends Component{
   }
 
   render(){
-    const {name,background,paletteId,id,showLink} = this.props
+    const {name,background,paletteId,id,showLink,isSingleColor} = this.props
     const {copied} = this.state
     return(
-      <div onClick={this.handleCopy} style={{background}} className={styles.colorBox}>
+      <div 
+        onClick={this.handleCopy} 
+        style={{background}} 
+        className={`${styles.colorBox} ${isSingleColor && styles.singleColor}`}>
         <div style={{background}} 
             className={`${styles.copy_overlay} ${copied && styles.show}`}/>
         <div className={`${styles.copiedMessage} ${copied && styles.show}`}>

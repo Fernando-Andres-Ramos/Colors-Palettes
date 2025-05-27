@@ -1,0 +1,11 @@
+.palette{
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.palette_colors{
+  height: 90%;
+}
+

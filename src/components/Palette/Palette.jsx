@@ -34,7 +34,8 @@ export default class Palette extends Component{
         name={color.name}
         key={color.id}
         id={color.id}
-        showLink={true}/>
+        showLink={true}
+        isSingleColor={false}/>
     ))
     return(
       <div className={styles.palette}>

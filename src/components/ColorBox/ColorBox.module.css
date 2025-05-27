@@ -5,7 +5,11 @@
   display: inline-block;
   position: relative;
   cursor:pointer; 
-  margin-bottom: -3.7px;
+  margin-bottom: -4px;
+}
+
+.singleColor{
+  height: 50%;
 }
 
 .copy_button{
@@ -27,6 +31,7 @@
   text-transform:uppercase;
   border:none;
   opacity: 0;
+  text-decoration: none;
 }
 
 .colorBox:hover .copy_button{
@@ -116,3 +121,17 @@
   font-weight: 100;
 }
 
+.goBack{
+  width:20%;
+  height: 50%;
+  cursor:pointer; 
+  display: inline-block;
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: -4px;
+  background-color: black;
+}
+
+.goBack .copy_button{
+  opacity: 1;
+}
