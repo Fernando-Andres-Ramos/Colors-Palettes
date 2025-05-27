@@ -9,7 +9,9 @@ import {Route, Routes, Navigate, useLocation} from 'react-router-dom'
 function App() {
   const location = useLocation();
   const pathSegments = location.pathname.split("/")
-  const id = pathSegments[2] || "flat-ui-colors-french"; 
+  const id = pathSegments[2] || "flat-ui-colors-french";
+  const colorId = pathSegments[3] || "red";
+
   
 
   function findPalette(idToFind){
@@ -29,7 +31,16 @@ function App() {
                     )}/>
                 }
       />
-      <Route exact path="/palette/:id/:colorId" element={<SingleColorPalette/>} />
+      <Route 
+        exact path="/palette/:id/:colorId" 
+        element={<SingleColorPalette
+                    colorId={colorId}
+                    palette={generatePalette(
+                      findPalette(id)
+                    )}/>
+                } 
+        />
+        
       <Route path="*" element={<Navigate to="/"/>} />
     </Routes>
   )
