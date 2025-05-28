@@ -86,9 +86,10 @@ export default function NewPaletteForm() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [background, setBackground] = React.useState("#ADD8E")
+  const [colors, setColors] = React.useState(["purple","pink"])
 
   const handleChangeComplete = (color) => {
-    setBackground(color.hex );
+    setBackground(color.hex )
   };
 
   const handleDrawerOpen = () => {
@@ -98,6 +99,10 @@ export default function NewPaletteForm() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const addNewColor = () =>{
+    setColors([...colors, background])
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -153,13 +158,21 @@ export default function NewPaletteForm() {
           onChangeComplete={handleChangeComplete}
           />
         
-        <Button variant="contained" color="primary">ADD COLOR</Button>
+        <Button 
+          variant="contained" 
+          color="primary"
+          style={{backgroundColor:`${background}`}}
+          onClick={addNewColor}>ADD COLOR</Button>
         <Divider />
         
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        
+        <ul>
+          {colors.map(color=>
+            <li style={{backgroundColor:`${color}`}} key={color}>{color}</li>
+          )}
+        </ul>
       </Main>
     </Box>
   );
