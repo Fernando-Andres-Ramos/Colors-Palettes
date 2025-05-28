@@ -21,9 +21,15 @@ const PaletteList_Container = styled.div`
   gap: 1rem;
 `
 const PaletteList_Nav = styled.nav`
+  width: 100%; 
   display: flex;
-  width: 100%;
+  flex-flow:row nowrap
   justify-content: space-between;
+  align-items:center;
+  a {
+    text-decoration:none;
+    color:white
+  }
 `
 const Palettes = styled.div`
   box-sizing: border-box;
@@ -51,6 +57,7 @@ function PaletteList(props){
       <PaletteList_Container>
         <PaletteList_Nav>
           <Title>React Colors</Title>
+          <Link to="/palette/new">Create New Palette</Link>
         </PaletteList_Nav>
         <Palettes> 
           {palettes.map(palette => 
