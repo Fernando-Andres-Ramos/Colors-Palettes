@@ -18,8 +18,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import {ChromePicker} from 'react-color'
+import Button from '@mui/material/Button';
 
-const drawerWidth = 300;
+
+const drawerWidth = 400;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
@@ -82,6 +85,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function NewPaletteForm() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [background, setBackground] = React.useState("#ADD8E")
+
+  const handleChangeComplete = (color) => {
+    setBackground(color.hex );
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -134,6 +142,18 @@ export default function NewPaletteForm() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        <Typography variant="h4">Design Your Palette </Typography>
+
+        <div>
+          <Button variant="contained" color="secondary">CREATE PALETTE</Button>
+          <Button variant="contained" color="primary">RANDOM COLOR</Button>
+        </div>
+        <ChromePicker 
+          color={background} 
+          onChangeComplete={handleChangeComplete}
+          />
+        
+        <Button variant="contained" color="primary">ADD COLOR</Button>
         <Divider />
         
       </Drawer>
