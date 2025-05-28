@@ -20,6 +20,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {ChromePicker} from 'react-color'
 import Button from '@mui/material/Button';
+import DraggableColorBox from "../DraggableColorBox/DraggableColorBox.jsx"
 
 
 const drawerWidth = 400;
@@ -33,6 +34,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `-${drawerWidth}px`,
+    height:`calc(100vh - 64px)`,
     variants: [
       {
         props: ({ open }) => open,
@@ -168,9 +170,9 @@ export default function NewPaletteForm() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <ul>
+        <ul style={{height:"100%"}}>
           {colors.map(color=>
-            <li style={{backgroundColor:`${color}`}} key={color}>{color}</li>
+            <DraggableColorBox key={color} color={color}/>
           )}
         </ul>
       </Main>
