@@ -11,6 +11,7 @@ const Root = styled.div`
   position: relative;
   cursor:pointer; 
   margin-bottom: -4px;
+  color:rgba(0,0,0,0.5);
   &:hover svg{
     color white;
     fill: white;
@@ -39,11 +40,18 @@ const BoxContent = styled.div`
 
 
 export default function DraggableColorBox(props){
+
+  const {color,name,removeColor} = props
+
+  const handleClick = () =>{
+    props.removeColor(name)
+  }
+  
   return(
-    <Root style={{backgroundColor:props.color}}>
+    <Root style={{backgroundColor:color}}>
       <BoxContent>
-        <span>{props.name}</span>
-        <DeleteIcon style={{color:"rgba(0,0,0,0.5)"}}/>
+        <span>{name}</span>
+        <DeleteIcon onClick={handleClick}/>
       </BoxContent>
     </Root>
   )

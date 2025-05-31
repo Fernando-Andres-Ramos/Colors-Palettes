@@ -125,6 +125,11 @@ export default function NewPaletteForm(props) {
     setColors([...colors, colorToAdd])
   }
 
+  /* Delete color */
+  const removeColor = (colorName) => {
+    setColors(colors.filter(color=>color.name !== colorName))
+  }
+
   /* watch is a method from "useForm" hook */
   React.useEffect(() => {
     setColorName(watch("colorInput"))
@@ -267,7 +272,12 @@ export default function NewPaletteForm(props) {
         <DrawerHeader />
         <ul style={{height:"100%"}}>
           {colors.map(color=>
-            <DraggableColorBox key={color.name} color={color.color} name={color.name}/>
+            <DraggableColorBox 
+              key={color.name} 
+              color={color.color} 
+              name={color.name}
+              removeColor={removeColor}
+            />
           )}
         </ul>
       </Main>
