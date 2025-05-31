@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -85,14 +86,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 /* Empieza el componente de React */
-export default function NewPaletteForm() {
+export default function NewPaletteForm(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [newColor, setNewColor] = React.useState("#ADD8E")
-  const [colors, setColors] = React.useState([])
   const [colorName, setColorName] = React.useState("")
+  const [colors, setColors] = React.useState([])
+  const [newPaletteName, setNewPaletteName] = React.useState("")
 
-  const {register,handleSubmit,watch, formState: { errors }} = useForm();
+  const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onBlur'});
+
+  const {
+    register:register2,
+    handleSubmit:handleSubmit2,
+    watch:watch2, 
+    formState: { errors:errors2 }} = useForm({mode:'onBlur'});
+
+  const navigate = useNavigate();
 
   
   /* Open and close the Drawer component from material-ui */
@@ -118,7 +128,8 @@ export default function NewPaletteForm() {
   /* watch is a method from "useForm" hook */
   React.useEffect(() => {
     setColorName(watch("colorInput"))
-  }, [watch("colorInput")])
+    setNewPaletteName(watch2("nameInput"))
+  }, [watch("colorInput"),watch2("nameInput")])
 
 
   /* Custom validation */
@@ -129,12 +140,28 @@ export default function NewPaletteForm() {
   const isColorUnique = () => {
     return colors.every((color) => color.color !== newColor)
   }
-  
+
+  const isPaletteNameUnique = (inputValue) => {
+    return props.palettes.every((palette) => palette.paletteName.toLowerCase()!==inputValue.toLowerCase())
+  }
+
+
+  /* Save the newPalette to the "database" */
+  const handleSavePalette = () =>{
+    const newName = newPaletteName
+    const newPalette = {
+      paletteName:newName, 
+      colors: colors, 
+      emoji:"NEW", 
+      id:newName.toLowerCase().replace(/ /g, "-")}
+    props.savePalette(newPalette)
+    navigate('/')
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} color="default">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -153,6 +180,29 @@ export default function NewPaletteForm() {
           <Typography variant="h6" noWrap component="div">
             Persistent drawer
           </Typography>
+
+
+        {/* Form added with react-hook-form */}
+        <form onSubmit={handleSubmit2(handleSavePalette)}>
+          <label>Palette Name</label>
+          <input
+            {...register2("nameInput", { 
+              required: "You must write a name",
+              validate: {
+                nameUnique: v => isPaletteNameUnique(v) ||"Palette name already used!",
+              }
+            })}
+          />
+          {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
+          
+          <Button 
+            variant="contained" 
+            color="primary"
+            type="submit">
+              Save Palette
+          </Button>
+        </form>
+
         </Toolbar>
       </AppBar>
       <Drawer
@@ -177,7 +227,7 @@ export default function NewPaletteForm() {
         <Typography variant="h4">Design Your Palette </Typography>
 
         <div>
-          <Button variant="contained" color="secondary">CREATE PALETTE</Button>
+          <Button variant="contained" color="secondary">CLEAR PALETTE</Button>
           <Button variant="contained" color="primary">RANDOM COLOR</Button>
         </div>
         <ChromePicker 
@@ -188,7 +238,8 @@ export default function NewPaletteForm() {
 
         {/* Form added with react-hook-form */}
         <form onSubmit={handleSubmit(addNewColor)}>
-          <input 
+          <label>Color Name</label>
+          <input
             {...register("colorInput", { 
               required: "You must write a name",
               validate: {

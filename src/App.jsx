@@ -6,23 +6,28 @@ import NewPaletteForm from './components/NewPaletteForm/NewPaletteForm.jsx'
 import seedColors from './utilities/seedColors.js'
 import {generatePalette} from './utilities/colorHelpers.js'
 import {Route, Routes, Navigate, useLocation} from 'react-router-dom'
+import React from 'react'
 
 function App() {
   const location = useLocation();
   const pathSegments = location.pathname.split("/")
   const paletteId = pathSegments[2] || "";
   const colorId = pathSegments[3] || "";
+  const [palettes, setPalettes] = React.useState(seedColors)
+  
 
 
   function findPalette(idToFind){
-    return seedColors.find(palette => palette.id === idToFind)
+    return palettes.find(palette => palette.id === idToFind)
+  }
+
+  function savePalette(paletteToSave){
+    setPalettes([...palettes,paletteToSave])
   }
   
   return (
     <Routes>
-      
-      
-      <Route exact path="/" element={<PaletteList palettes={seedColors}/>}/>
+      <Route exact path="/" element={<PaletteList palettes={palettes}/>}/>
       
       <Route 
         exact path="/palette/:paletteId" 
@@ -40,7 +45,14 @@ function App() {
           :<Navigate to="/"/>} 
         />
 
-      <Route exact path="/palette/new" element={<NewPaletteForm/>}/>  
+      <Route 
+        exact path="/palette/new" 
+        element={
+          <NewPaletteForm 
+            savePalette={savePalette} 
+            palettes={palettes}/>
+          }
+      />  
       
       <Route path="*" element={<Navigate to="/"/>} />
     </Routes>
