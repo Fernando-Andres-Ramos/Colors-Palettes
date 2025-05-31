@@ -92,32 +92,43 @@ export default function NewPaletteForm() {
   const [colors, setColors] = React.useState([])
   const [colorName, setColorName] = React.useState("")
 
-  const {register,handleSubmit,watch, formState: { errors },} = useForm();
+  const {register,handleSubmit,watch, formState: { errors }} = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const handleChangeComplete = (color) => {
-    setNewColor(color.hex )
-  };
-
+  
+  /* Open and close the Drawer component from material-ui */
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
-  const addNewColor = () =>{
+  /* Set color from colorPicker/ChromePicker  */
+  const handleChangeComplete = (color) => {
+    setNewColor(color.hex )
+  };
+
+  /* Add a new color with name and color-code to the new palette */
+  const addNewColor = () => {
     const colorToAdd = {name:colorName, color:newColor }
     setColors([...colors, colorToAdd])
   }
 
+  /* watch is a method from "useForm" hook */
   React.useEffect(() => {
-    setColorName(watch("colorImput"))
-  }, [watch("colorImput")])
+    setColorName(watch("colorInput"))
+  }, [watch("colorInput")])
+
+
+  /* Custom validation */
+  const isColorNameUnique = (inputValue) => {
+    return colors.every((color) => color.name.toLowerCase()!==inputValue.toLowerCase())
+  }
+
+  const isColorUnique = () => {
+    return colors.every((color) => color.color !== newColor)
+  }
   
 
   return (
@@ -172,12 +183,21 @@ export default function NewPaletteForm() {
         <ChromePicker 
           color={newColor} 
           onChangeComplete={handleChangeComplete}
-          />
+        />
         
 
+        {/* Form added with react-hook-form */}
         <form onSubmit={handleSubmit(addNewColor)}>
-          <input {...register("colorImput", { required: true })} />
-          {errors.colorImput && <p>This field is required</p>}
+          <input 
+            {...register("colorInput", { 
+              required: "You must write a name",
+              validate: {
+                isUnique: v => isColorNameUnique(v) ||"Color Name must be unique!",
+                isColorUnique: v => isColorUnique() ||"Color already Used!"
+              }
+            })}
+          />
+          {errors.colorInput && <p>{errors.colorInput.message}</p>}        
 
           <Button 
             variant="contained" 
