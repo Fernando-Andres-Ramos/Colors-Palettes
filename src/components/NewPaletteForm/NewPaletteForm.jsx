@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import {ChromePicker} from 'react-color'
 import Button from '@mui/material/Button';
 import DraggableColorBox from "../DraggableColorBox/DraggableColorBox.jsx"
+import { useForm, Controller } from "react-hook-form";
 
 
 const drawerWidth = 400;
@@ -87,11 +88,18 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function NewPaletteForm() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [background, setBackground] = React.useState("#ADD8E")
-  const [colors, setColors] = React.useState(["purple","pink"])
+  const [newColor, setNewColor] = React.useState("#ADD8E")
+  const [colors, setColors] = React.useState([])
+  const [colorName, setColorName] = React.useState("")
+
+  const {register,handleSubmit,watch, formState: { errors },} = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   const handleChangeComplete = (color) => {
-    setBackground(color.hex )
+    setNewColor(color.hex )
   };
 
   const handleDrawerOpen = () => {
@@ -103,8 +111,14 @@ export default function NewPaletteForm() {
   };
 
   const addNewColor = () =>{
-    setColors([...colors, background])
+    const colorToAdd = {name:colorName, color:newColor }
+    setColors([...colors, colorToAdd])
   }
+
+  React.useEffect(() => {
+    setColorName(watch("colorImput"))
+  }, [watch("colorImput")])
+  
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -156,23 +170,33 @@ export default function NewPaletteForm() {
           <Button variant="contained" color="primary">RANDOM COLOR</Button>
         </div>
         <ChromePicker 
-          color={background} 
+          color={newColor} 
           onChangeComplete={handleChangeComplete}
           />
         
-        <Button 
-          variant="contained" 
-          color="primary"
-          style={{backgroundColor:`${background}`}}
-          onClick={addNewColor}>ADD COLOR</Button>
-        <Divider />
+
+        <form onSubmit={handleSubmit(addNewColor)}>
+          <input {...register("colorImput", { required: true })} />
+          {errors.colorImput && <p>This field is required</p>}
+
+          <Button 
+            variant="contained" 
+            color="primary"
+            style={{backgroundColor:`${newColor}`}}
+            type="submit"
+            >
+              ADD COLOR
+          </Button>
+          <Divider />
+        </form> 
+
         
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
         <ul style={{height:"100%"}}>
           {colors.map(color=>
-            <DraggableColorBox key={color} color={color}/>
+            <DraggableColorBox key={color.name} color={color.color} name={color.name}/>
           )}
         </ul>
       </Main>
