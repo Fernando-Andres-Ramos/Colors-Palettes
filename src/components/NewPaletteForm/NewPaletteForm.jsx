@@ -87,11 +87,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 /* Empieza el componente de React */
 export default function NewPaletteForm(props) {
+
+  const maxColors=20;
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [newColor, setNewColor] = React.useState("#ADD8E")
   const [colorName, setColorName] = React.useState("")
-  const [colors, setColors] = React.useState([])
+  const [colors, setColors] = React.useState(props.palettes[0].colors)
   const [newPaletteName, setNewPaletteName] = React.useState("")
 
   const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onBlur'});
@@ -128,6 +130,17 @@ export default function NewPaletteForm(props) {
   /* Delete color */
   const removeColor = (colorName) => {
     setColors(colors.filter(color=>color.name !== colorName))
+  }
+
+  const clearColors = () =>{
+    setColors([])
+  }
+
+  const addRandomColor = () => {
+    const allColors = props.palettes.map(p=>p.colors).flat()
+    const rand = Math.floor(Math.random() * allColors.length)
+    const randomColor = allColors[rand]
+    setColors([...colors, randomColor])
   }
 
   /* watch is a method from "useForm" hook */
@@ -231,8 +244,8 @@ export default function NewPaletteForm(props) {
         <Typography variant="h4">Design Your Palette </Typography>
 
         <div>
-          <Button variant="contained" color="secondary">CLEAR PALETTE</Button>
-          <Button variant="contained" color="primary">RANDOM COLOR</Button>
+          <Button variant="contained" color="secondary" onClick={clearColors}>CLEAR PALETTE</Button>
+          <Button variant="contained" color="primary"  onClick={addRandomColor} disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
         </div>
         <ChromePicker 
           color={newColor} 
@@ -258,8 +271,9 @@ export default function NewPaletteForm(props) {
             color="primary"
             style={{backgroundColor:`${newColor}`}}
             type="submit"
+            disabled={colors.length >= maxColors}
             >
-              ADD COLOR
+              {colors.length >= maxColors?"Palette is Full":"Add Color"}
           </Button>
           <Divider />
         </form> 
