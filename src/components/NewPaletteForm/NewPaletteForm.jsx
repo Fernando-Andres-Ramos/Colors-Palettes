@@ -21,7 +21,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {ChromePicker} from 'react-color'
 import Button from '@mui/material/Button';
-import DraggableColorBox from "../DraggableColorBox/DraggableColorBox.jsx"
+import DraggableColorList from "../DraggableColorList/DraggableColorList.jsx"
 import { useForm, Controller } from "react-hook-form";
 
 
@@ -150,7 +150,6 @@ export default function NewPaletteForm(props) {
     return props.palettes.every((palette) => palette.paletteName.toLowerCase()!==inputValue.toLowerCase())
   }
 
-
   /* Save the newPalette to the "database" */
   const handleSavePalette = () =>{
     const newName = newPaletteName
@@ -240,7 +239,6 @@ export default function NewPaletteForm(props) {
           onChangeComplete={handleChangeComplete}
         />
         
-
         {/* Form added with react-hook-form */}
         <form onSubmit={handleSubmit(addNewColor)}>
           <label>Color Name</label>
@@ -265,21 +263,10 @@ export default function NewPaletteForm(props) {
           </Button>
           <Divider />
         </form> 
-
-        
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <ul style={{height:"100%"}}>
-          {colors.map(color=>
-            <DraggableColorBox 
-              key={color.name} 
-              color={color.color} 
-              name={color.name}
-              removeColor={removeColor}
-            />
-          )}
-        </ul>
+        <DraggableColorList colors={colors} removeColor={removeColor}/>
       </Main>
     </Box>
   );
