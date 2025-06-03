@@ -7,13 +7,15 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import {ChromePicker} from 'react-color'
 import Button from '@mui/material/Button';
 import DraggableColorList from "../DraggableColorList/DraggableColorList.jsx"
 import { useForm } from "react-hook-form";
 import PaletteFormNav from "../PaletteFormNav/PaletteFormNav.jsx"
+import ColorPickerForm from "../ColorPickerForm/ColorPickerForm.jsx"
 
-const drawerWidth = 400;
+/* Estilos */
+const drawerWidth = 400; //Tamaño maximo del sideBar
+
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
     flexGrow: 1,
@@ -97,10 +99,12 @@ export default function NewPaletteForm(props) {
     setColors(colors.filter(color=>color.name !== colorName))
   }
 
+  /* Clear de initial palette */
   const clearColors = () =>{
     setColors([])
   }
 
+  /* Choose a random color from all palettes */
   const addRandomColor = () => {
     const allColors = props.palettes.map(p=>p.colors).flat()
     const rand = Math.floor(Math.random() * allColors.length)
@@ -179,36 +183,20 @@ export default function NewPaletteForm(props) {
           <Button variant="contained" color="secondary" onClick={clearColors}>CLEAR PALETTE</Button>
           <Button variant="contained" color="primary"  onClick={addRandomColor} disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
         </div>
-        <ChromePicker 
-          color={newColor} 
-          onChangeComplete={handleChangeComplete}
+         
+        <ColorPickerForm 
+          newColor = {newColor}
+          handleChangeComplete={handleChangeComplete}
+          handleSubmit={handleSubmit}
+          addNewColor={addNewColor}
+          register={register}
+          errors={errors}
+          colors={colors}
+          maxColors={maxColors}
+          isColorNameUnique={isColorNameUnique}
+          isColorUnique={isColorUnique}
         />
-        
-        {/* Form added with react-hook-form */}
-        <form onSubmit={handleSubmit(addNewColor)}>
-          <label>Color Name</label>
-          <input
-            {...register("colorInput", { 
-              required: "You must write a name",
-              validate: {
-                isUnique: v => isColorNameUnique(v) ||"Color Name must be unique!",
-                isColorUnique: v => isColorUnique() ||"Color already Used!"
-              }
-            })}
-          />
-          {errors.colorInput && <p>{errors.colorInput.message}</p>}        
 
-          <Button 
-            variant="contained" 
-            color="primary"
-            style={{backgroundColor:`${newColor}`}}
-            type="submit"
-            disabled={colors.length >= maxColors}
-            >
-              {colors.length >= maxColors?"Palette is Full":"Add Color"}
-          </Button>
-          <Divider />
-        </form> 
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
