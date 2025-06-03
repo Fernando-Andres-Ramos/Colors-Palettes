@@ -32,7 +32,6 @@ const BoxContent = styled.div`
   letter-spacing: 1px;
   font-size: 12px;
   text-transform: uppercase;
-  font-size:12px;
   display:flex;
   justify-content: space-between;
   align-items: center

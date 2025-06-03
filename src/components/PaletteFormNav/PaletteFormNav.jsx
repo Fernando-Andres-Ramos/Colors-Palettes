@@ -1,0 +1,112 @@
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Button from '@mui/material/Button';
+
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  variants: [
+    {
+      props: ({ open }) => open,
+      style: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: `${drawerWidth}px`,
+        transition: theme.transitions.create(['margin', 'width'], {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      },
+    },
+  ],
+}));
+
+const drawerWidth = 400;
+
+
+export default class PaletteFormNav extends Component{
+  constructor (props){
+    super(props)
+  }
+
+  render(){
+
+    const {
+      classes,
+      open,
+      handleDrawerClose,
+      handleDrawerOpen,
+      register2,
+      handleSubmit2,
+      handleSavePalette,
+      errors2,
+      isPaletteNameUnique} = this.props
+
+    return(
+      <div>
+        <CssBaseline />
+        <AppBar position="fixed" open={open} color="default">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={[
+                {
+                  mr: 2,
+                },
+                open && { display: 'none' },
+              ]}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Persistent drawer
+            </Typography>
+
+
+          {/* Form added with react-hook-form */}
+          <form onSubmit={handleSubmit2(handleSavePalette)}>
+            <label>Palette Name</label>
+            <input
+              {...register2("nameInput", { 
+                required: "You must write a name",
+                validate: {
+                  nameUnique: v => isPaletteNameUnique(v) ||"Palette name already used!",
+                }
+              })}
+            />
+            {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
+            
+            <Button 
+              variant="contained" 
+              color="primary"
+              type="submit">
+                Save Palette
+            </Button>
+
+            <Link to='/'>
+              <Button variant='contained' color='secondary'>
+                Go Back
+              </Button>
+            </Link>
+          </form>
+
+          </Toolbar>
+        </AppBar>
+      </div>
+    )
+  }
+}

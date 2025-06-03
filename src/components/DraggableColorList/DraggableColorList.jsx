@@ -6,7 +6,7 @@ import styles from "./DraggableColorList.module.css"
 export default function DraggableColorList({colors,removeColor}){
   
   return(
-    <div style={{height:"100%"}}>
+    <div style={{height:"100%",lineHeight:0}}>
       {colors.map(color=>
         <DraggableColorBox 
           key={color.name} 
