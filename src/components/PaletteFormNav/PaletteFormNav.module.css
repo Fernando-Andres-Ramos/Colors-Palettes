@@ -1,0 +1,19 @@
+.nav_buttons{
+  justify-self: flex-end;
+  display:flex;
+  flex-flow: row wrap;
+  place-content: space-between center;
+}
+
+.toolbar{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.buttonAndText{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}

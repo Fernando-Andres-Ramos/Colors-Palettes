@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
+import styles from './PaletteFormNav.module.css'
 
 
 const AppBar = styled(MuiAppBar, {
@@ -41,7 +42,6 @@ export default class PaletteFormNav extends Component{
   }
 
   render(){
-
     const {
       classes,
       open,
@@ -57,53 +57,54 @@ export default class PaletteFormNav extends Component{
       <div>
         <CssBaseline />
         <AppBar position="fixed" open={open} color="default">
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={[
-                {
-                  mr: 2,
-                },
-                open && { display: 'none' },
-              ]}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Persistent drawer
-            </Typography>
-
-
-          {/* Form added with react-hook-form */}
-          <form onSubmit={handleSubmit2(handleSavePalette)}>
-            <label>Palette Name</label>
-            <input
-              {...register2("nameInput", { 
-                required: "You must write a name",
-                validate: {
-                  nameUnique: v => isPaletteNameUnique(v) ||"Palette name already used!",
-                }
-              })}
-            />
-            {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
-            
-            <Button 
-              variant="contained" 
-              color="primary"
-              type="submit">
-                Save Palette
-            </Button>
-
-            <Link to='/'>
-              <Button variant='contained' color='secondary'>
-                Go Back
-              </Button>
-            </Link>
-          </form>
-
+          <Toolbar className={styles.toolbar}>
+            <div className={styles.buttonAndText}>
+              <IconButton
+                styles={{alignSelf:"center"}}
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={[
+                  {
+                    mr: 2,
+                  },
+                  open && { display: 'none' },
+                ]}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                Create a palette
+              </Typography>
+            </div>
+            <div className={styles.nav_buttons}>
+              {/* Form added with react-hook-form */}
+              <form onSubmit={handleSubmit2(handleSavePalette)}>
+                <label>Palette Name</label>
+                <input
+                  {...register2("nameInput", { 
+                    required: "You must write a name",
+                    validate: {
+                      nameUnique: v => isPaletteNameUnique(v) ||"Palette name already used!",
+                    }
+                  })}
+                />
+                {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
+                
+                <Button 
+                  variant="contained" 
+                  color="primary"
+                  type="submit">
+                    Save Palette
+                </Button>
+              </form>
+              <Link to='/'>
+                <Button variant='contained' color='secondary'>
+                  Go Back
+                </Button>
+              </Link>
+            </div>
           </Toolbar>
         </AppBar>
       </div>
