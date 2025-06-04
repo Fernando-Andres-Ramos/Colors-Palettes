@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import Divider from '@mui/material/Divider';
+import styles from './ColorPickerForm.module.css'
 import {ChromePicker} from 'react-color'
+import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
 export default class ColorPickerForm extends Component {
@@ -26,14 +27,18 @@ export default class ColorPickerForm extends Component {
     return (
       <div>
         <ChromePicker 
+          className={styles.picker}
           color={newColor} 
           onChangeComplete={handleChangeComplete}
         />
         
         {/* Form added with react-hook-form */}
         <form onSubmit={handleSubmit(addNewColor)}>
-          <label>Color Name</label>
           <input
+            variant='filled'
+            margin='normal'
+            placeholder='Color Name'
+            className={styles.colorNameInput}
             {...register("colorInput", { 
               required: "You must write a name",
               validate: {
@@ -45,6 +50,7 @@ export default class ColorPickerForm extends Component {
           {errors.colorInput && <p>{errors.colorInput.message}</p>}        
 
           <Button 
+            className={styles.addColor}
             variant="contained" 
             color="primary"
             style={{backgroundColor:`${colors.length >= maxColors ? "grey" : newColor }`}}

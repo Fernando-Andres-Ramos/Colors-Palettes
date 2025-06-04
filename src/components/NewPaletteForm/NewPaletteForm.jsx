@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from "./NewPaletteForm.module.css"
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -19,7 +20,7 @@ const drawerWidth = 400; //Tamaño maximo del sideBar
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -138,7 +139,7 @@ export default function NewPaletteForm(props) {
     const newPalette = {
       paletteName:newName, 
       colors: colors, 
-      emoji:"NEW", 
+      emoji:"NEW",
       id:newName.toLowerCase().replace(/ /g, "-")}
     props.savePalette(newPalette)
     navigate('/')
@@ -158,13 +159,15 @@ export default function NewPaletteForm(props) {
       isPaletteNameUnique={isPaletteNameUnique}
     />
 
-      <Drawer
+      <Drawer className={styles.drawerPaper}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            display:'flex',
+            alignItems:'center',
           },
         }}
         variant="persistent"
@@ -177,26 +180,28 @@ export default function NewPaletteForm(props) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Typography variant="h4">Design Your Palette </Typography>
 
-        <div>
-          <Button variant="contained" color="secondary" onClick={clearColors}>CLEAR PALETTE</Button>
-          <Button variant="contained" color="primary"  onClick={addRandomColor} disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
+        <div className={styles.container}>
+          <Typography variant="h4">Design Your Palette </Typography>
+
+          <div className={styles.buttons}>
+            <Button className={styles.button} variant="contained" color="secondary" onClick={clearColors}>CLEAR PALETTE</Button>
+            <Button className={styles.button} variant="contained" color="primary"  onClick={addRandomColor} disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
+          </div>
+          
+          <ColorPickerForm 
+            newColor = {newColor}
+            handleChangeComplete={handleChangeComplete}
+            handleSubmit={handleSubmit}
+            addNewColor={addNewColor}
+            register={register}
+            errors={errors}
+            colors={colors}
+            maxColors={maxColors}
+            isColorNameUnique={isColorNameUnique}
+            isColorUnique={isColorUnique}
+          />
         </div>
-         
-        <ColorPickerForm 
-          newColor = {newColor}
-          handleChangeComplete={handleChangeComplete}
-          handleSubmit={handleSubmit}
-          addNewColor={addNewColor}
-          register={register}
-          errors={errors}
-          colors={colors}
-          maxColors={maxColors}
-          isColorNameUnique={isColorNameUnique}
-          isColorUnique={isColorUnique}
-        />
-
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

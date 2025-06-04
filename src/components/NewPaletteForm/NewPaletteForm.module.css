@@ -1,0 +1,24 @@
+.container{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.drawerPaper{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons{
+  width: 100%;
+  padding: 0 5%;
+}
+
+.button{
+  width: 50%;
+}
