@@ -64,13 +64,13 @@ export default function NewPaletteForm(props) {
   const [colors, setColors] = React.useState(props.palettes[0].colors)
   const [newPaletteName, setNewPaletteName] = React.useState("")
 
-  const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onBlur'});
+  const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onChange'});
 
   const {
     register:register2,
     handleSubmit:handleSubmit2,
     watch:watch2, 
-    formState: { errors:errors2 }} = useForm({mode:'onBlur'});
+    formState: { errors:errors2 }} = useForm({mode:'onChange'});
 
   const navigate = useNavigate();
 
