@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import styles from './PaletteFormNav.module.css'
+import PaletteMetaForm from '../PaletteMetaForm/PaletteMetaForm.jsx'
 
 
 const AppBar = styled(MuiAppBar, {
@@ -48,7 +49,6 @@ export default class PaletteFormNav extends Component{
       handleDrawerClose,
       handleDrawerOpen,
       register2,
-      handleSubmit2,
       handleSavePalette,
       errors2,
       isPaletteNameUnique} = this.props
@@ -78,33 +78,19 @@ export default class PaletteFormNav extends Component{
                 Create a palette
               </Typography>
             </div>
-            <div className={styles.nav_buttons}>
-              {/* Form added with react-hook-form */}
-              <form onSubmit={handleSubmit2(handleSavePalette)}>
-                <label>Palette Name</label>
-                <input
-                  {...register2("nameInput", { 
-                    required: "You must write a name",
-                    validate: {
-                      nameUnique: v => isPaletteNameUnique(v) ||"Palette name already used!",
-                    }
-                  })}
-                />
-                {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
-                
-                <Button 
-                  variant="contained" 
-                  color="primary"
-                  type="submit">
-                    Save Palette
-                </Button>
-              </form>
-              <Link to='/'>
-                <Button variant='contained' color='secondary'>
-                  Go Back
-                </Button>
-              </Link>
-            </div>
+
+            <PaletteMetaForm
+              handleSavePalette={handleSavePalette} 
+              register2={register2} 
+              errors2={errors2} 
+              isPaletteNameUnique={isPaletteNameUnique} 
+            />
+
+            <Link to='/'>
+              <Button variant='contained' color='secondary'>
+                Go Back
+              </Button>
+            </Link> 
           </Toolbar>
         </AppBar>
       </div>

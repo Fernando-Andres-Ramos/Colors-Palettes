@@ -66,12 +66,10 @@ export default function NewPaletteForm(props) {
 
   const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onChange'});
 
-  const {
-    register:register2,
-    handleSubmit:handleSubmit2,
-    watch:watch2, 
-    formState: { errors:errors2 }} = useForm({mode:'onChange'});
+  const {register:register2, formState: { errors:errors2 }} = useForm({mode:'onChange'});
 
+
+  /* Hook para navegar */
   const navigate = useNavigate();
 
   
@@ -116,8 +114,7 @@ export default function NewPaletteForm(props) {
   /* watch is a method from "useForm" hook */
   React.useEffect(() => {
     setColorName(watch("colorInput"))
-    setNewPaletteName(watch2("nameInput"))
-  }, [watch("colorInput"),watch2("nameInput")])
+  }, [watch("colorInput")])
 
 
   /* Custom validation */
@@ -130,12 +127,11 @@ export default function NewPaletteForm(props) {
   }
 
   const isPaletteNameUnique = (inputValue) => {
-    return props.palettes.every((palette) => palette.paletteName.toLowerCase()!==inputValue.toLowerCase())
+    return props.palettes.every((palette) => palette.paletteName.toLowerCase().replace(/ /g, "-")!==inputValue.toLowerCase().replace(/ /g, "-"))
   }
 
   /* Save the newPalette to the "database" */
-  const handleSavePalette = () =>{
-    const newName = newPaletteName
+  const handleSavePalette = (newName) =>{
     const newPalette = {
       paletteName:newName, 
       colors: colors, 
@@ -152,7 +148,6 @@ export default function NewPaletteForm(props) {
       open={open} 
       handleDrawerOpen={handleDrawerOpen}
       handleDrawerClose={handleDrawerClose}
-      handleSubmit2={handleSubmit2}
       register2={register2}
       handleSavePalette={handleSavePalette}
       errors2={errors2}
