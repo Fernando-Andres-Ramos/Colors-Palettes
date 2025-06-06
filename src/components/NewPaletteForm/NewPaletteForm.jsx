@@ -118,12 +118,12 @@ export default function NewPaletteForm(props) {
 
 
   /* Save the newPalette to the "database" */
-  const handleSavePalette = (e) =>{
-    let newName = e.nameInput
+  const handleSavePalette = (data) =>{
+    const {newName,emoji} = data
     const newPalette = {
       paletteName:newName, 
       colors: colors, 
-      emoji:"NEW",
+      emoji:emoji,
       id:newName.toLowerCase().replace(/ /g, "-")}
     props.savePalette(newPalette)
     navigate('/')

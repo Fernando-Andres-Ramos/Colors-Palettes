@@ -21,31 +21,35 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function PaletteMetaForm(props) {
   const {handleSavePalette,register2,errors2,palettes,handleSubmit2,hideForm} = props
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState("form");
+  const [newPaletteName,setNewPaletteName] = React.useState("")
 
   const isPaletteNameUnique = (inputValue) => {
     return props.palettes.every((palette) => palette.paletteName.toLowerCase().replace(/ /g, "-")!==inputValue.toLowerCase().replace(/ /g, "-"));
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const showEmojiPicker = (e) =>{
+    setNewPaletteName(e.nameInput)
+    setOpen("emoji")
+  }
+  
+  const submitData = (data) =>{
+    handleSavePalette({emoji:data.emoji, newName:newPaletteName})
+  }
 
   return (
     <React.Fragment>
-      <BootstrapDialog>
-        <EmojiPicker/>
+      <BootstrapDialog open={open==="emoji"} onClose={hideForm}>
+        <DialogTitle>Pick a palette emoji!</DialogTitle>
+        <EmojiPicker onEmojiClick={submitData}/>
       </BootstrapDialog>
       <BootstrapDialog
         onClose={hideForm}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={open==="form"}
       >
         <DialogTitle>Choose a Palette Name</DialogTitle>
-        <form onSubmit={handleSubmit2(handleSavePalette)}>
+        <form onSubmit={handleSubmit2(showEmojiPicker)}>
           <DialogContent dividers>
             <DialogContentText>
               Please enter a name for your new beautiful palette. Make sure it's unique!
