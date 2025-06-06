@@ -10,6 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import styles from './PaletteFormNav.module.css'
 import PaletteMetaForm from '../PaletteMetaForm/PaletteMetaForm.jsx'
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 
 const AppBar = styled(MuiAppBar, {
@@ -87,7 +88,7 @@ export default class PaletteFormNav extends Component{
                   open && { display: 'none' },
                 ]}
               >
-                <MenuIcon />
+                <AddToPhotosIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
                 Create a palette
