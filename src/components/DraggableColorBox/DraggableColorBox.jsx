@@ -10,7 +10,6 @@ const Root = styled.div`
   display: inline-block;
   position: relative;
   cursor:pointer; 
-  margin-bottom: -4px;
   color:rgba(0,0,0,0.5);
   &:hover svg{
     color white;

@@ -1,15 +1,10 @@
 .colorBox{
-  width:20%;
-  height: 25%;
+  width:100%;
+  height: 100%;
   margin: 0 auto;
   display: inline-block;
   position: relative;
   cursor:pointer; 
-  margin-bottom: -4px;
-}
-
-.singleColor{
-  height: 50%;
 }
 
 .copy_button{
@@ -44,11 +39,14 @@
   width: 100%;
   left:0px;
   bottom:0px;
-  /* padding: 10px; */
+  padding: 3%;
   color:black;
   letter-spacing: 1px;
   font-size: 12px;
   text-transform: uppercase;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .light_text{
@@ -72,6 +70,7 @@
   line-height: 30px;
   text-transform: uppercase;
   text-decoration: none;
+  align-self: center;
 }
 
 .copy_overlay{
@@ -131,13 +130,12 @@
 }
 
 .goBack{
-  width:20%;
-  height: 50%;
+  width:100%;
+  height: 100%;
   cursor:pointer; 
   display: inline-block;
   margin: 0 auto;
   position: relative;
-  margin-bottom: -4px;
   background-color: black;
 }
 

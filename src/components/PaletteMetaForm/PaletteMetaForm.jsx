@@ -7,8 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
 import styles from './PaletteMetaForm.module.css'
-import data from '@emoji-mart/data'
-import { Picker } from 'emoji-mart'
+import EmojiPicker from 'emoji-picker-react';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -37,6 +36,9 @@ export default function PaletteMetaForm(props) {
 
   return (
     <React.Fragment>
+      <BootstrapDialog>
+        <EmojiPicker/>
+      </BootstrapDialog>
       <BootstrapDialog
         onClose={hideForm}
         aria-labelledby="customized-dialog-title"
@@ -48,6 +50,7 @@ export default function PaletteMetaForm(props) {
             <DialogContentText>
               Please enter a name for your new beautiful palette. Make sure it's unique!
             </DialogContentText>
+            
             <input
               variant='filled'
               margin='normal'
