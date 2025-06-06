@@ -7,6 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
 import styles from './PaletteMetaForm.module.css'
+import data from '@emoji-mart/data'
+import { Picker } from 'emoji-mart'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -18,7 +20,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function PaletteMetaForm(props) {
-  const {handleSavePalette,register2,errors2,palettes,handleSubmit2} = props
+  const {handleSavePalette,register2,errors2,palettes,handleSubmit2,hideForm} = props
 
   const [open, setOpen] = React.useState(true);
 
@@ -36,7 +38,7 @@ export default function PaletteMetaForm(props) {
   return (
     <React.Fragment>
       <BootstrapDialog
-        onClose={handleClose}
+        onClose={hideForm}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
@@ -61,7 +63,7 @@ export default function PaletteMetaForm(props) {
             {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={hideForm}>Cancel</Button>
               <Button 
                 variant="contained" 
                 color="primary"

@@ -44,11 +44,16 @@ export default class PaletteFormNav extends Component{
       formShowing: false
     })
 
-    this.handleClickOpen = this.handleClickOpen.bind(this)
+    this.showForm = this.showForm.bind(this)
+    this.hideForm = this.hideForm.bind(this)
   }
 
-  handleClickOpen(){
+  showForm(){
     this.setState({formShowing:true})
+  }
+
+  hideForm(){
+    this.setState({formShowing:false})
   }
 
   render(){
@@ -96,6 +101,7 @@ export default class PaletteFormNav extends Component{
                 errors2={errors2}  
                 palettes={palettes}
                 handleSubmit2={handleSubmit2}
+                hideForm={this.hideForm}
               />  
             )}
             
@@ -106,7 +112,10 @@ export default class PaletteFormNav extends Component{
                 </Button>
               </Link>
 
-              <div className={styles.openModal_button} variant="contained" onClick={this.handleClickOpen}>
+              <div 
+                className={styles.openModal_button} 
+                variant="contained" 
+                onClick={this.showForm}>
                 Save
               </div>
             </div>
