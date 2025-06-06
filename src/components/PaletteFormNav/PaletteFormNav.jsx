@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -40,6 +40,15 @@ const drawerWidth = 400;
 export default class PaletteFormNav extends Component{
   constructor (props){
     super(props)
+    this.state = ({ 
+      formShowing: false
+    })
+
+    this.handleClickOpen = this.handleClickOpen.bind(this)
+  }
+
+  handleClickOpen(){
+    this.setState({formShowing:true})
   }
 
   render(){
@@ -51,7 +60,8 @@ export default class PaletteFormNav extends Component{
       register2,
       handleSavePalette,
       errors2,
-      isPaletteNameUnique} = this.props
+      palettes,
+      handleSubmit2} = this.props
 
     return(
       <div>
@@ -79,18 +89,28 @@ export default class PaletteFormNav extends Component{
               </Typography>
             </div>
 
-            <PaletteMetaForm
-              handleSavePalette={handleSavePalette} 
-              register2={register2} 
-              errors2={errors2} 
-              isPaletteNameUnique={isPaletteNameUnique} 
-            />
+            {this.state.formShowing && (
+              <PaletteMetaForm
+                handleSavePalette={handleSavePalette} 
+                register2={register2} 
+                errors2={errors2}  
+                palettes={palettes}
+                handleSubmit2={handleSubmit2}
+              />  
+            )}
+            
+            <div className={styles.navButtons}>
+              <Link to='/'>
+                <Button className={styles.button} variant='contained' color='secondary'>
+                  Go Back
+                </Button>
+              </Link>
 
-            <Link to='/'>
-              <Button variant='contained' color='secondary'>
-                Go Back
-              </Button>
-            </Link> 
+              <div className={styles.openModal_button} variant="contained" onClick={this.handleClickOpen}>
+                Save
+              </div>
+            </div>
+
           </Toolbar>
         </AppBar>
       </div>

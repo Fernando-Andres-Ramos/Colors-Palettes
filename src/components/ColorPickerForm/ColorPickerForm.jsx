@@ -20,9 +20,16 @@ export default class ColorPickerForm extends Component {
       errors,
       colors,
       maxColors,
-      isColorNameUnique,
-      isColorUnique
     } = this.props
+
+    /* Custom validation */
+    const isColorNameUnique = (inputValue) => {
+      return colors.every((color) => color.name.toLowerCase()!==inputValue.toLowerCase())
+    }
+
+    const isColorUnique = () => {
+      return colors.every((color) => color.color !== newColor)
+    }
 
     return (
       <div>

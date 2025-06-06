@@ -66,7 +66,7 @@ export default function NewPaletteForm(props) {
 
   const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onChange'});
 
-  const {register:register2, formState: { errors:errors2 }} = useForm({mode:'onChange'});
+  const {handleSubmit:handleSubmit2, register:register2, formState: { errors:errors2 }} = useForm({mode:'onChange'});
 
 
   /* Hook para navegar */
@@ -117,21 +117,9 @@ export default function NewPaletteForm(props) {
   }, [watch("colorInput")])
 
 
-  /* Custom validation */
-  const isColorNameUnique = (inputValue) => {
-    return colors.every((color) => color.name.toLowerCase()!==inputValue.toLowerCase())
-  }
-
-  const isColorUnique = () => {
-    return colors.every((color) => color.color !== newColor)
-  }
-
-  const isPaletteNameUnique = (inputValue) => {
-    return props.palettes.every((palette) => palette.paletteName.toLowerCase().replace(/ /g, "-")!==inputValue.toLowerCase().replace(/ /g, "-"))
-  }
-
   /* Save the newPalette to the "database" */
-  const handleSavePalette = (newName) =>{
+  const handleSavePalette = (e) =>{
+    let newName = e.nameInput
     const newPalette = {
       paletteName:newName, 
       colors: colors, 
@@ -151,7 +139,8 @@ export default function NewPaletteForm(props) {
       register2={register2}
       handleSavePalette={handleSavePalette}
       errors2={errors2}
-      isPaletteNameUnique={isPaletteNameUnique}
+      palettes={props.palettes}
+      handleSubmit2={handleSubmit2}
     />
 
       <Drawer className={styles.drawerPaper}
@@ -193,8 +182,6 @@ export default function NewPaletteForm(props) {
             errors={errors}
             colors={colors}
             maxColors={maxColors}
-            isColorNameUnique={isColorNameUnique}
-            isColorUnique={isColorUnique}
           />
         </div>
       </Drawer>

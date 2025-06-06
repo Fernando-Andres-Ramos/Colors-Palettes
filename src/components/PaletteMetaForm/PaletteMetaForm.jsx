@@ -1,77 +1,76 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContentText from '@mui/material/DialogContentText';
+import styles from './PaletteMetaForm.module.css'
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
 export default function PaletteMetaForm(props) {
-  const [open, setOpen] = React.useState(false);
+  const {handleSavePalette,register2,errors2,palettes,handleSubmit2} = props
+
+  const [open, setOpen] = React.useState(true);
+
+  const isPaletteNameUnique = (inputValue) => {
+    return props.palettes.every((palette) => palette.paletteName.toLowerCase().replace(/ /g, "-")!==inputValue.toLowerCase().replace(/ /g, "-"));
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
 
-  const {handleSavePalette,register2,errors2,isPaletteNameUnique} = props
-
-  const handleSubmit = (name) =>{
-    handleSavePalette(name)
-  }
-
   return (
     <React.Fragment>
-      <div variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </div>
-      <Dialog
-        open={open}
+      <BootstrapDialog
         onClose={handleClose}
-        slotProps={{
-          paper: {
-            component: 'form',
-            onSubmit: (event) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(formData.entries());
-              handleSubmit(formJson.nameInput)
-              handleClose();
-            },
-          },
-        }}
+        aria-labelledby="customized-dialog-title"
+        open={open}
       >
-        <DialogTitle>Create a new palette!</DialogTitle>
-          <DialogContent>
+        <DialogTitle>Choose a Palette Name</DialogTitle>
+        <form onSubmit={handleSubmit2(handleSavePalette)}>
+          <DialogContent dividers>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We
-              will send updates occasionally.
+              Please enter a name for your new beautiful palette. Make sure it's unique!
             </DialogContentText>
-              <input
-                {...register2("nameInput", { 
-                  required: "You must write a name",
-                  validate: {
-                    nameUnique: v => isPaletteNameUnique(v) ||"Palette name already used!",
-                  }
-                })}
-              />
-              {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
-              
+            <input
+              variant='filled'
+              margin='normal'
+              placeholder="Palette Name"
+              className={styles.formInput}
+              {...register2("nameInput", { 
+                required: "You must write a name",
+                validate: {
+                  nameUnique: v => isPaletteNameUnique(v) ||"Palette name already used!",
+                }
+              })}
+            />
+            {errors2.nameInput && <p>{errors2.nameInput.message}</p>}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button 
-              variant="contained" 
-              color="primary"
-              type="submit">
-                Save Palette
-            </Button>
+              <Button 
+                variant="contained" 
+                color="primary"
+                type="submit">
+                  Save Palette
+              </Button>
           </DialogActions>
-      </Dialog>
+        </form>
+      </BootstrapDialog>
     </React.Fragment>
   );
 }
