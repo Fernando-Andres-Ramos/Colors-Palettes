@@ -105,6 +105,13 @@
   color: white;
 }
 
+@media (max-width:575.98px){
+  .copiedMessage{
+    font-size: 2rem;
+  }
+}
+
+
 .copiedMessage.show{
   opacity: 1;
   transform: scale(1);
