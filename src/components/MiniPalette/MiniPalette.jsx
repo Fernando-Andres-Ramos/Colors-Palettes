@@ -18,6 +18,7 @@ const Root = styled.div`
   }
   &:hover svg{
     opacity:1;
+    cursor: pointer;
   }
 `
 const Colors = styled.div`
@@ -54,11 +55,13 @@ const MiniColor = styled.div`
   margin-bottom: -3.5px;
 `
 
-const DeleteButton = styled.button`
-  
-`
-
 function MiniPalette(props){
+
+  function handleRemovePalette(e){
+    e.preventDefault()
+    e.stopPropagation()
+    props.deletePalette(props.id)
+  }
 
   const MiniColorBoxes = props.colors.map(color => (
     <MiniColor 
@@ -71,9 +74,7 @@ function MiniPalette(props){
   const {paletteName,emoji} = props 
   return(
   <Root>
-    <DeleteButton>
-      <DeleteIcon className={styles.deleteIcon}/>
-    </DeleteButton>
+    <DeleteIcon onClick={handleRemovePalette} className={styles.deleteIcon}/>
     <Colors>
       {MiniColorBoxes}
     </Colors>

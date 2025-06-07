@@ -22,6 +22,11 @@ function App() {
     return palettes.find(palette => palette.id === idToFind)
   }
 
+  function deletePalette(idToRemove){
+    const updatedPalettes = palettes.filter(palette=>palette.id!==idToRemove)
+    setPalettes(updatedPalettes)
+  }
+
   function savePalette(paletteToSave){
     setPalettes([...palettes,paletteToSave])
   }
@@ -32,7 +37,15 @@ function App() {
   
   return (
     <Routes>
-      <Route exact path="/" element={<PaletteList palettes={palettes}/>}/>
+      <Route 
+        exact path="/" 
+        element={
+          <PaletteList 
+          palettes={palettes} 
+          deletePalette={deletePalette}
+          />
+        }
+      />
       
       <Route 
         exact path="/palette/:paletteId" 

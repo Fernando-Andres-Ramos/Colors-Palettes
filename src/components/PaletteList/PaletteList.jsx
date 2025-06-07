@@ -51,7 +51,7 @@ function PaletteList(props){
   const [id, setId] = useState("")
   const navigate = useNavigate()
 
-  const {palettes} = props
+  const {palettes, deletePalette} = props
   return(
     <Root>
       <PaletteList_Container>
@@ -61,10 +61,10 @@ function PaletteList(props){
         </PaletteList_Nav>
         <Palettes> 
           {palettes.map(palette => 
-            <Link 
+            <Link
               to={`/palette/${palette.id}`}
               key={palette.id}>
-              <MiniPalette {...palette}/></Link>
+              <MiniPalette {...palette} deletePalette={deletePalette}/></Link>
           )}
         </Palettes>
       </PaletteList_Container>
