@@ -23,17 +23,20 @@ export default function PaletteMetaForm(props) {
 
   const [open, setOpen] = React.useState("form");
   const [newPaletteName,setNewPaletteName] = React.useState("")
+  const [loading, setLoading] = React.useState(false)
 
   const isPaletteNameUnique = (inputValue) => {
     return props.palettes.every((palette) => palette.paletteName.toLowerCase().replace(/ /g, "-")!==inputValue.toLowerCase().replace(/ /g, "-"));
   }
 
   const showEmojiPicker = (e) =>{
+    setLoading(true)
     setNewPaletteName(e.nameInput)
     setOpen("emoji")
   }
   
   const submitData = (data) =>{
+    setLoading(false)
     handleSavePalette({emoji:data.emoji, newName:newPaletteName})
   }
 
@@ -71,11 +74,12 @@ export default function PaletteMetaForm(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={hideForm}>Cancel</Button>
-              <Button 
+              <Button
+                className={styles.submitButton}
                 variant="contained" 
                 color="primary"
                 type="submit">
-                  Save Palette
+                  {loading?"Loading...":"Save Palette"}
               </Button>
           </DialogActions>
         </form>
