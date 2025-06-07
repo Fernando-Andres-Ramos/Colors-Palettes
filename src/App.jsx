@@ -25,11 +25,10 @@ function App() {
   function savePalette(paletteToSave){
     setPalettes([...palettes,paletteToSave])
   }
-
-  function syncLocalStorage(){
-    window.localStorage.setItem("palettes", JSON.stringify(palettes))
-  }
   
+  useEffect(() => {
+    window.localStorage.setItem("palettes", JSON.stringify(palettes));
+  }, [palettes]);
   
   return (
     <Routes>
