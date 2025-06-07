@@ -1,8 +1,8 @@
 import React from 'react'
 import { css} from '@emotion/react'
 import styled from '@emotion/styled'
-
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import styles from './MiniPalette.module.css'
 
 const Root = styled.div`
   height: 100%;
@@ -15,6 +15,9 @@ const Root = styled.div`
   &:hover{
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  }
+  &:hover svg{
+    opacity:1;
   }
 `
 const Colors = styled.div`
@@ -51,6 +54,10 @@ const MiniColor = styled.div`
   margin-bottom: -3.5px;
 `
 
+const DeleteButton = styled.button`
+  
+`
+
 function MiniPalette(props){
 
   const MiniColorBoxes = props.colors.map(color => (
@@ -64,6 +71,9 @@ function MiniPalette(props){
   const {paletteName,emoji} = props 
   return(
   <Root>
+    <DeleteButton>
+      <DeleteIcon className={styles.deleteIcon}/>
+    </DeleteButton>
     <Colors>
       {MiniColorBoxes}
     </Colors>
