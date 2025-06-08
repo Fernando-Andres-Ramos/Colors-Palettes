@@ -4,6 +4,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import { css} from '@emotion/react'
 import styled from '@emotion/styled'
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Root = styled.div`
   height: 100vh;
@@ -55,24 +56,25 @@ const PaletteList_Nav = styled.nav`
     color:white
   }
 `
-const Palettes = styled.div`
+const MotionPalettes = styled(motion.div)`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(3,30%);
+  grid-template-columns: repeat(3, 30%);
   grid-gap: 3rem;
   justify-content: center;
 
-  @media (max-width:767.98px){
-    grid-template-columns: repeat(2,45%);
+  @media (max-width: 767.98px) {
+    grid-template-columns: repeat(2, 45%);
   }
 
-  @media (max-width:575.98px){
-    grid-template-columns: repeat(1,90%);
+  @media (max-width: 575.98px) {
+    grid-template-columns: repeat(1, 90%);
     grid-gap: 2rem;
   }
-`
+`;
+
 const Title = styled.h1`
   width: 100%;
   color: white;
@@ -93,14 +95,29 @@ function PaletteList(props){
           <Title>React Colors</Title>
           <Link to="/palette/new">Create New Palette</Link>
         </PaletteList_Nav>
-        <Palettes> 
-          {palettes.map(palette => 
-            <Link
-              to={`/palette/${palette.id}`}
-              key={palette.id}>
-              <MiniPalette {...palette} deletePalette={deletePalette}/></Link>
-          )}
-        </Palettes>
+        <AnimatePresence>
+          <MotionPalettes
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {palettes.map(palette => (
+              <motion.div
+                key={palette.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+              >
+                <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
+                  <MiniPalette {...palette} deletePalette={deletePalette} />
+                </Link>
+              </motion.div>
+            ))}
+          </MotionPalettes>
+        </AnimatePresence>
+
       </PaletteList_Container>
     </Root>
   )
