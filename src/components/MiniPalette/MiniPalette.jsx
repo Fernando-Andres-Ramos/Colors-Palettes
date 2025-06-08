@@ -1,10 +1,12 @@
-import React from 'react'
-import { css} from '@emotion/react'
-import styled from '@emotion/styled'
+import React,{useState} from 'react';
+import { css} from '@emotion/react';
+import styled from '@emotion/styled';
 import DeleteIcon from '@mui/icons-material/Delete';
-import styles from './MiniPalette.module.css'
+import styles from './MiniPalette.module.css';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Root = styled.div`
+
+const MotionRoot = styled(motion.div)`
   height: 100%;
   background-color: white;
   border-radius: 5px;
@@ -28,7 +30,6 @@ const Colors = styled.div`
   border-radius: 5px;
   overflow: hidden;
 `
-
 const Title= styled.h5`
   display: flex;
   flex-direction: row;
@@ -41,11 +42,9 @@ const Title= styled.h5`
   position: relative;
   text-decoration:none;
 `
-
 const Emoji= styled.span`
   align-self: center;
 `
-
 const MiniColor = styled.div`
   height:25%;
   width: 20%;
@@ -54,13 +53,17 @@ const MiniColor = styled.div`
   position: relative;
   margin-bottom: -3.5px;
 `
-
 function MiniPalette(props){
+
+  const [isVisible, setIsVisible] = useState(true)
 
   function handleRemovePalette(e){
     e.preventDefault()
     e.stopPropagation()
-    props.deletePalette(props.id)
+    setIsVisible(false)
+    setTimeout(() => {
+      props.deletePalette(props.id)
+    }, 750);
   }
 
   const MiniColorBoxes = props.colors.map(color => (
@@ -73,16 +76,25 @@ function MiniPalette(props){
 
   const {paletteName,emoji} = props 
   return(
-  <Root>
-    <DeleteIcon onClick={handleRemovePalette} className={styles.deleteIcon}/>
-    <Colors>
-      {MiniColorBoxes}
-    </Colors>
-    <Title>
-      {paletteName}
-      <Emoji>{emoji}</Emoji>
-    </Title>
-  </Root>
+  <AnimatePresence>
+
+    {isVisible 
+    && (
+          <MotionRoot 
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}>
+            <DeleteIcon onClick={handleRemovePalette} className={styles.deleteIcon}/>
+            <Colors>
+              {MiniColorBoxes}
+            </Colors>
+            <Title>
+              {paletteName}
+              <Emoji>{emoji}</Emoji>
+            </Title>
+          </MotionRoot>
+      )}
+  </AnimatePresence>
   )
 }
 

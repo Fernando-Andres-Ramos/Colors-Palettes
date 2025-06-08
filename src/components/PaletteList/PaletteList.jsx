@@ -73,8 +73,7 @@ const MotionPalettes = styled(motion.div)`
     grid-template-columns: repeat(1, 90%);
     grid-gap: 2rem;
   }
-`;
-
+`
 const Title = styled.h1`
   width: 100%;
   color: white;
@@ -83,11 +82,10 @@ const Title = styled.h1`
 `
 
 function PaletteList(props){
-
+  const {palettes, deletePalette} = props
   const [id, setId] = useState("")
   const navigate = useNavigate()
 
-  const {palettes, deletePalette} = props
   return(
     <Root>
       <PaletteList_Container>
@@ -117,7 +115,6 @@ function PaletteList(props){
             ))}
           </MotionPalettes>
         </AnimatePresence>
-
       </PaletteList_Container>
     </Root>
   )
