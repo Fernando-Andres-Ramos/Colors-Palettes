@@ -62,8 +62,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 /* Empieza el componente de React */
 export default function NewPaletteForm(props) {
-  console.log(window.innerWidth)
-
   const maxColors=20;
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);

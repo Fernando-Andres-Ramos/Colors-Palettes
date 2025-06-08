@@ -14,11 +14,32 @@ const Root = styled.div`
   align-items:flex-start;
 `
 const PaletteList_Container = styled.div`
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-flow: column wrap;
+  justify-content: center
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0.5rem;
+
+  @media (max-width:1400px){
+    width: 80%;
+  }
+
+  @media (max-width:1199.98px){
+    width: 80%;
+  }
+
+  @media (max-width:991.98px){
+    width: 80%;
+  }
+
+  @media (max-width:767.98px){
+    width: 90%;
+  }
+
+  @media (max-width:575.98px){
+    width: 75%;
+  }
 `
 const PaletteList_Nav = styled.nav`
   width: 100%; 
@@ -37,7 +58,17 @@ const Palettes = styled.div`
   height: 100%;
   display: grid;
   grid-template-columns: repeat(3,30%);
-  grid-gap: 5%;
+  grid-gap: 3rem;
+  justify-content: center;
+
+  @media (max-width:767.98px){
+    grid-template-columns: repeat(2,45%);
+  }
+
+  @media (max-width:575.98px){
+    grid-template-columns: repeat(1,90%);
+    grid-gap: 2rem;
+  }
 `
 const Title = styled.h1`
   width: 100%;
