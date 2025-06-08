@@ -14,8 +14,12 @@ import { useForm } from "react-hook-form";
 import PaletteFormNav from "../PaletteFormNav/PaletteFormNav.jsx"
 import ColorPickerForm from "../ColorPickerForm/ColorPickerForm.jsx"
 
+let drawerWidth
+
 /* Estilos */
-const drawerWidth = 400; //Tamaño maximo del sideBar
+  window.innerWidth <= 575.98 ? drawerWidth = 300 : drawerWidth = 400; //Tamaño maximo del sideBar
+   //Tamaño maximo del sideBar
+  
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
@@ -27,6 +31,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     }),
     marginLeft: `-${drawerWidth}px`,
     height:`calc(100vh - 64px)`,
+    width:'100%',
+
     variants: [
       {
         props: ({ open }) => open,
@@ -56,6 +62,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 /* Empieza el componente de React */
 export default function NewPaletteForm(props) {
+  console.log(window.innerWidth)
 
   const maxColors=20;
   const theme = useTheme();

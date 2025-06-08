@@ -32,7 +32,7 @@ export default class ColorPickerForm extends Component {
     }
 
     return (
-      <div>
+      <div className={styles.container}>
         <ChromePicker 
           className={styles.picker}
           color={newColor} 

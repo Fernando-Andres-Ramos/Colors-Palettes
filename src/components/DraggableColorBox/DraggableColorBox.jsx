@@ -4,8 +4,8 @@ import { css} from '@emotion/react'
 import styled from '@emotion/styled'
 import DeleteIcon from '@mui/icons-material/Delete';
 const Root = styled.div`
-  width:20%;
-  height: 25%;
+  width:100%;
+  height: 100%;
   margin: 0 auto;
   display: inline-block;
   position: relative;
