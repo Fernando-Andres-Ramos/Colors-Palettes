@@ -67,7 +67,7 @@ export default function NewPaletteForm(props) {
   const [open, setOpen] = React.useState(false);
   const [newColor, setNewColor] = React.useState("#ADD8E")
   const [colorName, setColorName] = React.useState("")
-  const [colors, setColors] = React.useState(props.palettes[0].colors)
+  const [colors, setColors] = React.useState(props.palettes[0].colors||[])
   const [newPaletteName, setNewPaletteName] = React.useState("")
 
   const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onChange'});
