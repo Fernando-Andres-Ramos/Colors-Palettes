@@ -1,10 +1,19 @@
-import React, { Component, useEffect, useState } from 'react'
-import styles from './PaletteList.module.css'
+import { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import MiniPalette from '../MiniPalette/MiniPalette.jsx'
-import { css} from '@emotion/react'
-import styled from '@emotion/styled'
 import { motion, AnimatePresence } from 'framer-motion';
+import styled from '@emotion/styled'
+import { red, blue } from '@mui/material/colors';
+import Avatar from '@mui/material/Avatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Root = styled.div`
   height: 100vh;
@@ -82,9 +91,27 @@ const Title = styled.h1`
 `
 
 function PaletteList(props){
+  const [isVisible, setIsVisible] = useState(true)
   const {palettes, deletePalette} = props
+  const [openDeleteDialog,setOpenDeleteDialog] = useState(false)
+  const [deleteID, setDeleteID] = useState("")
   const [id, setId] = useState("")
   const navigate = useNavigate()
+
+  function openDialog(id){
+    setDeleteID(id)
+    setOpenDeleteDialog(true)
+  }
+
+  function closeDialog(e){
+    setOpenDeleteDialog(false)
+    setDeleteID("")
+  }
+
+  function handleRemovePalette(){
+    deletePalette(deleteID)
+    closeDialog()
+  }
 
   return(
     <Root>
@@ -99,25 +126,60 @@ function PaletteList(props){
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-          >
-            {palettes.map(palette => (
-              <motion.div
-                key={palette.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8, y: 20 }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-              >
-                <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
-                  <MiniPalette {...palette} deletePalette={deletePalette} />
-                </Link>
-              </motion.div>
-            ))}
+            >
+            {isVisible && (
+              palettes.map(palette => (
+                <motion.div
+                  key={palette.id}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0 }}
+                >
+                  <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
+                    <MiniPalette 
+                      {...palette} 
+                      openDialog={openDialog} 
+                    />
+                  </Link>
+                </motion.div>
+              ))
+            )}
           </MotionPalettes>
         </AnimatePresence>
       </PaletteList_Container>
+
+      <Dialog 
+        onClose={closeDialog} 
+        open={openDeleteDialog} 
+        aria-labelledby="delete-dialog-title"
+        disableEnforceFocus
+        disableRestoreFocus
+      >
+        <DialogTitle id="delete-dialog-title">
+          Delete This Palette
+          <List>
+            <ListItem>
+              <ListItemButton onClick={handleRemovePalette}>
+                <ListItemAvatar>
+                  <Avatar style={{backgroundColor:blue[100],color:blue[600]}}><CheckIcon/></Avatar>
+                </ListItemAvatar>
+                  <ListItemText>Delete</ListItemText>
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton onClick={closeDialog}>
+                <ListItemAvatar>
+                  <Avatar style={{backgroundColor:red[100],color:red[600]}}><CloseIcon/></Avatar>
+                </ListItemAvatar>
+                  <ListItemText>Cancel</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </DialogTitle>
+      </Dialog>
     </Root>
   )
 }
 
 export default PaletteList
+

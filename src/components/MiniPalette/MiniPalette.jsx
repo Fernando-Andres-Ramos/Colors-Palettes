@@ -1,12 +1,10 @@
-import React,{useState} from 'react';
-import { css} from '@emotion/react';
 import styled from '@emotion/styled';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styles from './MiniPalette.module.css';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 
-const MotionRoot = styled(motion.div)`
+const Root = styled.div`
   height: 100%;
   background-color: white;
   border-radius: 5px;
@@ -55,15 +53,10 @@ const MiniColor = styled.div`
 `
 function MiniPalette(props){
 
-  const [isVisible, setIsVisible] = useState(true)
-
   function handleRemovePalette(e){
     e.preventDefault()
     e.stopPropagation()
-    setIsVisible(false)
-    setTimeout(() => {
-      props.deletePalette(props.id)
-    }, 750);
+    props.openDialog(props.id)
   }
 
   const MiniColorBoxes = props.colors.map(color => (
@@ -76,25 +69,19 @@ function MiniPalette(props){
 
   const {paletteName,emoji} = props 
   return(
-  <AnimatePresence>
-
-    {isVisible 
-    && (
-          <MotionRoot 
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}>
-            <DeleteIcon onClick={handleRemovePalette} className={styles.deleteIcon}/>
-            <Colors>
-              {MiniColorBoxes}
-            </Colors>
-            <Title>
-              {paletteName}
-              <Emoji>{emoji}</Emoji>
-            </Title>
-          </MotionRoot>
-      )}
-  </AnimatePresence>
+      <Root 
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}>
+        <DeleteIcon onClick={handleRemovePalette} className={styles.deleteIcon}/>
+        <Colors>
+          {MiniColorBoxes}
+        </Colors>
+        <Title>
+          {paletteName}
+          <Emoji>{emoji}</Emoji>
+        </Title>
+      </Root>
   )
 }
 
