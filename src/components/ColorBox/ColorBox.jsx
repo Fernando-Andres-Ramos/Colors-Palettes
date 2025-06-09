@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react';
 import styles from './ColorBox.module.css'
 import {Link} from 'react-router-dom'
 import chroma from 'chroma-js'

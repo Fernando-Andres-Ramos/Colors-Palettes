@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react';
 import styles from './PaletteFooter.module.css'
 
 class PaletteFooter extends Component{

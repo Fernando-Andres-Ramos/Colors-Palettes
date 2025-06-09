@@ -1,6 +1,3 @@
-import React, { Component } from 'react'
-import styles from "./DraggableColorBox.module.css"
-import { css} from '@emotion/react'
 import styled from '@emotion/styled'
 import DeleteIcon from '@mui/icons-material/Delete';
 const Root = styled.div`

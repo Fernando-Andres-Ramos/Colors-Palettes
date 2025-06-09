@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react';
 import {Link} from 'react-router-dom'
 import ColorBox from '../ColorBox/ColorBox.jsx'
 import Navbar from '../Navbar/Navbar.jsx'

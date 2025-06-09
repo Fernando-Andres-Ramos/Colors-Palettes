@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styles from './MiniPalette.module.css';
-import { motion } from 'framer-motion';
 
 
 const Root = styled.div`
