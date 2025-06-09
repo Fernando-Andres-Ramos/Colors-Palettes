@@ -3,7 +3,6 @@ import styles from './Palette.module.css'
 import ColorBox from "../ColorBox/ColorBox.jsx"
 import Navbar from "../Navbar/Navbar.jsx"
 import PaletteFooter from "../PaletteFooter/PaletteFooter.jsx"
-import { motion} from 'framer-motion';
 
 
 export default class Palette extends Component{

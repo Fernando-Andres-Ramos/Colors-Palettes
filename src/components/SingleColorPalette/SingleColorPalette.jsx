@@ -1,13 +1,10 @@
 import { Component } from 'react';
 import {Link} from 'react-router-dom'
+import styles from './SingleColorPalette.module.css'
+import styles2 from '../ColorBox/ColorBox.module.css'
 import ColorBox from '../ColorBox/ColorBox.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
 import PaletteFooter from "../PaletteFooter/PaletteFooter.jsx"
-import styles from './SingleColorPalette.module.css'
-import styles2 from '../ColorBox/ColorBox.module.css'
-import { motion} from 'framer-motion';
-
-
 
 class SingleColorPalette extends Component{
 

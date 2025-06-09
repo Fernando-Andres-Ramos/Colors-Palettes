@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import DeleteIcon from '@mui/icons-material/Delete';
 import styles from './MiniPalette.module.css';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const Root = styled.div`

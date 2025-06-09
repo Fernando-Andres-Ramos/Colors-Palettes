@@ -1,7 +1,7 @@
 import { Component } from 'react';
+import chroma from 'chroma-js'
 import styles from './ColorBox.module.css'
 import {Link} from 'react-router-dom'
-import chroma from 'chroma-js'
 
 
 export default class ColorBox extends Component{

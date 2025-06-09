@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom'
-import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import { motion, AnimatePresence } from 'framer-motion';
+import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import styled from '@emotion/styled'
 import { red, blue } from '@mui/material/colors';
 import Avatar from '@mui/material/Avatar';
@@ -187,38 +187,3 @@ function PaletteList(props){
 }
 
 export default PaletteList
-
-
-/* "use client"
-
-import { AnimatePresence, motion } from "motion/react"
-import { useState } from "react"
-
-export default function ExitAnimation() {
-    const [isVisible, setIsVisible] = useState(true)
-
-    return (
-        <div style={container}>
-            <AnimatePresence initial={false}>
-                {isVisible ? (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0 }}
-                        style={box}
-                        key="box"
-                    />
-                ) : null}
-            </AnimatePresence>
-            <motion.button
-                style={button}
-                onClick={() => setIsVisible(!isVisible)}
-                whileTap={{ y: 1 }}
-            >
-                {isVisible ? "Hide" : "Show"}
-            </motion.button>
-        </div>
-    )
-} */
-
-

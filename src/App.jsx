@@ -1,14 +1,17 @@
 import React,{useEffect} from 'react'
 import {Route, Routes, Navigate, useLocation} from 'react-router-dom'
-import {generatePalette} from './utilities/colorHelpers.js'
-import seedColors from './utilities/seedColors.js'
+import './App.css' 
+
 import Palette from './components/Palette/Palette.jsx'
 import PaletteList from './components/PaletteList/PaletteList.jsx'
 import SingleColorPalette from './components/SingleColorPalette/SingleColorPalette.jsx'
 import NewPaletteForm from './components/NewPaletteForm/NewPaletteForm.jsx'
 import MotionDiv from './components/MotionDiv/MotionDiv.jsx'
-import { motion, AnimatePresence } from 'framer-motion';
-import './App.css' 
+
+import { AnimatePresence } from 'framer-motion';
+
+import seedColors from './utilities/seedColors.js'
+import {generatePalette} from './utilities/colorHelpers.js'
 
 function App() {
   const savedPalettes = JSON.parse(window.localStorage.getItem("palettes"))

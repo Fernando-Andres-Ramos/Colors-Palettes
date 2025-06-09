@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import DraggableColorBox from '../DraggableColorBox/DraggableColorBox.jsx'
 import styles from "./DraggableColorList.module.css"
+import DraggableColorBox from '../DraggableColorBox/DraggableColorBox.jsx'
 
 
 export default function DraggableColorList({colors,removeColor}){

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import styles from "./NewPaletteForm.module.css"
+
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -9,19 +11,18 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Button from '@mui/material/Button';
+
 import DraggableColorList from "../DraggableColorList/DraggableColorList.jsx"
-import { useForm } from "react-hook-form";
 import PaletteFormNav from "../PaletteFormNav/PaletteFormNav.jsx"
 import ColorPickerForm from "../ColorPickerForm/ColorPickerForm.jsx"
-import { motion} from 'framer-motion';
 
 
 let drawerWidth
 
 /* Estilos */
-  window.innerWidth <= 575.98 ? drawerWidth = 300 : drawerWidth = 400; //Tamaño maximo del sideBar
-   //Tamaño maximo del sideBar
-  
+window.innerWidth <= 575.98 ? drawerWidth = 300 : drawerWidth = 400; //Tamaño maximo del sideBar
+//Tamaño maximo del sideBar
+
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
