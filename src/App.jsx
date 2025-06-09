@@ -6,6 +6,7 @@ import Palette from './components/Palette/Palette.jsx'
 import PaletteList from './components/PaletteList/PaletteList.jsx'
 import SingleColorPalette from './components/SingleColorPalette/SingleColorPalette.jsx'
 import NewPaletteForm from './components/NewPaletteForm/NewPaletteForm.jsx'
+import MotionDiv from './components/MotionDiv/MotionDiv.jsx'
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css' 
 
@@ -42,39 +43,51 @@ function App() {
         <Route 
           exact path="/" 
           element={
-            <PaletteList 
-            palettes={palettes} 
-            deletePalette={deletePalette}
-            />
+            <MotionDiv>
+              <PaletteList 
+              palettes={palettes} 
+              deletePalette={deletePalette}
+              />
+            </MotionDiv>
           }
         />
         
         <Route 
           exact path="/palette/:paletteId" 
           element={findPalette(paletteId)
-            ?<Palette palette={generatePalette(findPalette(paletteId))}/>
-            :<Navigate to="/"/>}
+            ?<MotionDiv>
+                <Palette palette={generatePalette(findPalette(paletteId))}/>
+              </MotionDiv>
+            :<MotionDiv>
+              <Navigate to="/"/>
+             </MotionDiv>}
         />
         
         <Route 
           exact path="/palette/:paletteId/:colorId" 
           element={findPalette(paletteId)
-            ?<SingleColorPalette 
-                colorId={colorId} 
-                palette={generatePalette(findPalette(paletteId))}/>
-            :<Navigate to="/"/>} 
+            ?<MotionDiv>
+                <SingleColorPalette 
+                  colorId={colorId} 
+                  palette={generatePalette(findPalette(paletteId))}/>
+              </MotionDiv>
+            :<MotionDiv>
+              <Navigate to="/"/>
+             </MotionDiv>} 
           />
 
         <Route 
           exact path="/palette/new" 
           element={
-            <NewPaletteForm 
+            <MotionDiv>
+              <NewPaletteForm 
               savePalette={savePalette} 
               palettes={palettes}/>
+            </MotionDiv>
             }
         />  
         
-        <Route path="*" element={<Navigate to="/"/>} />
+        <Route path="*" element={<MotionDiv><Navigate to="/"/></MotionDiv>} />
       </Routes>
 
 

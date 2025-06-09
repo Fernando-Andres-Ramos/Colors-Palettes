@@ -39,29 +39,15 @@ export default class Palette extends Component{
         isSingleColor={false}/>
     ))
     return(
-      <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.7}}
-      style={{ 
-        position: "absolute", 
-        width: "100%", 
-        height: "100%", 
-        top: 0, 
-        left: 0 
-      }}
-      >
-        <div className={styles.palette}>
-          <Navbar 
-            defaultValue={level} 
-            changeLevel={this.changeLevel} 
-            changeSelectValue={this.changeSelectValue}
-            isSingleColor={true}/>
-          <div className={styles.palette_colors}>{colorBoxes}</div>
-          <PaletteFooter paletteName={paletteName} emoji={emoji}/>
-        </div>
-      </motion.div>
+      <div className={styles.palette}>
+        <Navbar 
+          defaultValue={level} 
+          changeLevel={this.changeLevel} 
+          changeSelectValue={this.changeSelectValue}
+          isSingleColor={true}/>
+        <div className={styles.palette_colors}>{colorBoxes}</div>
+        <PaletteFooter paletteName={paletteName} emoji={emoji}/>
+      </div>
     )
   }
 }

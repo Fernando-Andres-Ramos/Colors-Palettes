@@ -31,13 +31,16 @@ export default function PaletteMetaForm(props) {
 
   const showEmojiPicker = (e) =>{
     setLoading(true)
-    setNewPaletteName(e.nameInput)
-    setOpen("emoji")
+    setTimeout(() => {
+      setNewPaletteName(e.nameInput)
+      setOpen("emoji")
+    }, 100);
   }
   
   const submitData = (data) =>{
-    setLoading(false)
     handleSavePalette({emoji:data.emoji, newName:newPaletteName})
+    setLoading(false)
+    setOpen("")
   }
 
   return (
