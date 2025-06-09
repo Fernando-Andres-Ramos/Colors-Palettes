@@ -118,71 +118,85 @@ function PaletteList(props){
   }
 
   return(
-    <Root>
-      <PaletteList_Container>
-        <PaletteList_Nav>
-          <Title>React Colors</Title>
-          <Link to="/palette/new">Create New Palette</Link>
-        </PaletteList_Nav>
-        <AnimatePresence>
-          <MotionPalettes>
-            {
-              palettes.map(palette => (
-                <AnimatePresence key={palette.id}>
-                  {
-                    unMount!=palette.id && (
-                      <motion.div
-                        key={palette.id}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0 }}
-                      >
-                        <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
-                          <MiniPalette 
-                            {...palette} 
-                            openDialog={openDialog} 
-                          />
-                        </Link>
-                      </motion.div>
-                    ) 
-                  }
-                </AnimatePresence>
-              ))
-            }
-          </MotionPalettes>
-        </AnimatePresence>
-      </PaletteList_Container>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.7  }}
+      style={{ 
+        position: "absolute", 
+        width: "100%", 
+        height: "100%", 
+        top: 0, 
+        left: 0 
+      }}
+    >    
+      <Root>
+        <PaletteList_Container>
+          <PaletteList_Nav>
+            <Title>React Colors</Title>
+            <Link to="/palette/new">Create New Palette</Link>
+          </PaletteList_Nav>
+          <AnimatePresence>
+            <MotionPalettes>
+              {
+                palettes.map(palette => (
+                  <AnimatePresence key={palette.id}>
+                    {
+                      unMount!=palette.id && (
+                        <motion.div
+                          key={palette.id}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0 }}
+                        >
+                          <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
+                            <MiniPalette 
+                              {...palette} 
+                              openDialog={openDialog} 
+                            />
+                          </Link>
+                        </motion.div>
+                      ) 
+                    }
+                  </AnimatePresence>
+                ))
+              }
+            </MotionPalettes>
+          </AnimatePresence>
+        </PaletteList_Container>
 
-      <Dialog 
-        onClose={closeDialog} 
-        open={openDeleteDialog} 
-        aria-labelledby="delete-dialog-title"
-        disableEnforceFocus
-        disableRestoreFocus
-      >
-        <DialogTitle id="delete-dialog-title">
-          Delete This Palette
-          <List>
-            <ListItem>
-              <ListItemButton onClick={handleRemovePalette}>
-                <ListItemAvatar>
-                  <Avatar style={{backgroundColor:blue[100],color:blue[600]}}><CheckIcon/></Avatar>
-                </ListItemAvatar>
-                  <ListItemText>Delete</ListItemText>
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <ListItemButton onClick={closeDialog}>
-                <ListItemAvatar>
-                  <Avatar style={{backgroundColor:red[100],color:red[600]}}><CloseIcon/></Avatar>
-                </ListItemAvatar>
-                  <ListItemText>Cancel</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </DialogTitle>
-      </Dialog>
-    </Root>
+        <Dialog 
+          onClose={closeDialog} 
+          open={openDeleteDialog} 
+          aria-labelledby="delete-dialog-title"
+          disableEnforceFocus
+          disableRestoreFocus
+        >
+          <DialogTitle id="delete-dialog-title">
+            Delete This Palette
+            <List>
+              <ListItem>
+                <ListItemButton onClick={handleRemovePalette}>
+                  <ListItemAvatar>
+                    <Avatar style={{backgroundColor:blue[100],color:blue[600]}}><CheckIcon/></Avatar>
+                  </ListItemAvatar>
+                    <ListItemText>Delete</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton onClick={closeDialog}>
+                  <ListItemAvatar>
+                    <Avatar style={{backgroundColor:red[100],color:red[600]}}><CloseIcon/></Avatar>
+                  </ListItemAvatar>
+                    <ListItemText>Cancel</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </DialogTitle>
+        </Dialog>
+      </Root>
+    </motion.div>
   )
 }
 

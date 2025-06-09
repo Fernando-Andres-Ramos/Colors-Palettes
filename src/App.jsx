@@ -6,6 +6,7 @@ import Palette from './components/Palette/Palette.jsx'
 import PaletteList from './components/PaletteList/PaletteList.jsx'
 import SingleColorPalette from './components/SingleColorPalette/SingleColorPalette.jsx'
 import NewPaletteForm from './components/NewPaletteForm/NewPaletteForm.jsx'
+import { motion, AnimatePresence } from 'framer-motion';
 import './App.css' 
 
 function App() {
@@ -36,44 +37,48 @@ function App() {
   }, [palettes]);
   
   return (
-    <Routes>
-      <Route 
-        exact path="/" 
-        element={
-          <PaletteList 
-          palettes={palettes} 
-          deletePalette={deletePalette}
-          />
-        }
-      />
-      
-      <Route 
-        exact path="/palette/:paletteId" 
-        element={findPalette(paletteId)
-          ?<Palette palette={generatePalette(findPalette(paletteId))}/>
-          :<Navigate to="/"/>}
-      />
-      
-      <Route 
-        exact path="/palette/:paletteId/:colorId" 
-        element={findPalette(paletteId)
-          ?<SingleColorPalette 
-              colorId={colorId} 
-              palette={generatePalette(findPalette(paletteId))}/>
-          :<Navigate to="/"/>} 
-        />
-
-      <Route 
-        exact path="/palette/new" 
-        element={
-          <NewPaletteForm 
-            savePalette={savePalette} 
-            palettes={palettes}/>
+    <AnimatePresence mode="sync">
+      <Routes location={location} key={location.pathname}>
+        <Route 
+          exact path="/" 
+          element={
+            <PaletteList 
+            palettes={palettes} 
+            deletePalette={deletePalette}
+            />
           }
-      />  
-      
-      <Route path="*" element={<Navigate to="/"/>} />
-    </Routes>
+        />
+        
+        <Route 
+          exact path="/palette/:paletteId" 
+          element={findPalette(paletteId)
+            ?<Palette palette={generatePalette(findPalette(paletteId))}/>
+            :<Navigate to="/"/>}
+        />
+        
+        <Route 
+          exact path="/palette/:paletteId/:colorId" 
+          element={findPalette(paletteId)
+            ?<SingleColorPalette 
+                colorId={colorId} 
+                palette={generatePalette(findPalette(paletteId))}/>
+            :<Navigate to="/"/>} 
+          />
+
+        <Route 
+          exact path="/palette/new" 
+          element={
+            <NewPaletteForm 
+              savePalette={savePalette} 
+              palettes={palettes}/>
+            }
+        />  
+        
+        <Route path="*" element={<Navigate to="/"/>} />
+      </Routes>
+
+
+    </AnimatePresence>
   )
 }
 

@@ -13,6 +13,8 @@ import DraggableColorList from "../DraggableColorList/DraggableColorList.jsx"
 import { useForm } from "react-hook-form";
 import PaletteFormNav from "../PaletteFormNav/PaletteFormNav.jsx"
 import ColorPickerForm from "../ColorPickerForm/ColorPickerForm.jsx"
+import { motion} from 'framer-motion';
+
 
 let drawerWidth
 
@@ -136,65 +138,79 @@ export default function NewPaletteForm(props) {
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-    
-    <PaletteFormNav 
-      open={open} 
-      handleDrawerOpen={handleDrawerOpen}
-      handleDrawerClose={handleDrawerClose}
-      register2={register2}
-      handleSavePalette={handleSavePalette}
-      errors2={errors2}
-      palettes={props.palettes}
-      handleSubmit2={handleSubmit2}
-    />
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.7}}
+      style={{ 
+        position: "absolute", 
+        width: "100%", 
+        height: "100%", 
+        top: 0, 
+        left: 0 
+      }}
+    >
+      <Box sx={{ display: 'flex' }}>
+      
+      <PaletteFormNav 
+        open={open} 
+        handleDrawerOpen={handleDrawerOpen}
+        handleDrawerClose={handleDrawerClose}
+        register2={register2}
+        handleSavePalette={handleSavePalette}
+        errors2={errors2}
+        palettes={props.palettes}
+        handleSubmit2={handleSubmit2}
+      />
 
-      <Drawer className={styles.drawerPaper}
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+        <Drawer className={styles.drawerPaper}
+          sx={{
             width: drawerWidth,
-            boxSizing: 'border-box',
-            display:'flex',
-            alignItems:'center',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+              display:'flex',
+              alignItems:'center',
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
 
-        <div className={styles.container}>
-          <Typography variant="h4">Design Your Palette </Typography>
+          <div className={styles.container}>
+            <Typography variant="h4">Design Your Palette </Typography>
 
-          <div className={styles.buttons}>
-            <Button className={styles.button} variant="contained" color="secondary" onClick={clearColors}>CLEAR PALETTE</Button>
-            <Button className={styles.button} variant="contained" color="primary"  onClick={addRandomColor} disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
+            <div className={styles.buttons}>
+              <Button className={styles.button} variant="contained" color="secondary" onClick={clearColors}>CLEAR PALETTE</Button>
+              <Button className={styles.button} variant="contained" color="primary"  onClick={addRandomColor} disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
+            </div>
+            
+            <ColorPickerForm 
+              newColor = {newColor}
+              handleChangeComplete={handleChangeComplete}
+              handleSubmit={handleSubmit}
+              addNewColor={addNewColor}
+              register={register}
+              errors={errors}
+              colors={colors}
+              maxColors={maxColors}
+            />
           </div>
-          
-          <ColorPickerForm 
-            newColor = {newColor}
-            handleChangeComplete={handleChangeComplete}
-            handleSubmit={handleSubmit}
-            addNewColor={addNewColor}
-            register={register}
-            errors={errors}
-            colors={colors}
-            maxColors={maxColors}
-          />
-        </div>
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        <DraggableColorList colors={colors} removeColor={removeColor}/>
-      </Main>
-    </Box>
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+          <DraggableColorList colors={colors} removeColor={removeColor}/>
+        </Main>
+      </Box>
+    </motion.div>
   );
 }
