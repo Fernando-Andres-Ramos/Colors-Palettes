@@ -16,6 +16,7 @@ import DraggableColorList from "../DraggableColorList/DraggableColorList.jsx"
 import PaletteFormNav from "../PaletteFormNav/PaletteFormNav.jsx"
 import ColorPickerForm from "../ColorPickerForm/ColorPickerForm.jsx"
 
+import seedColors from '../../utilities/seedColors.js';
 
 let drawerWidth
 
@@ -68,9 +69,9 @@ export default function NewPaletteForm(props) {
   const maxColors=20;
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [newColor, setNewColor] = React.useState("#ADD8E")
+  const [newColor, setNewColor] = React.useState("#FF0000")
   const [colorName, setColorName] = React.useState("")
-  const [colors, setColors] = React.useState(props.palettes[0].colors||[])
+  const [colors, setColors] = React.useState(seedColors[0].colors)
   const [newPaletteName, setNewPaletteName] = React.useState("")
 
   const {register,handleSubmit,watch, formState: { errors }} = useForm({mode:'onChange'});
@@ -114,7 +115,7 @@ export default function NewPaletteForm(props) {
 
   /* Choose a random color from all palettes */
   const addRandomColor = () => {
-    const allColors = props.palettes.map(p=>p.colors).flat()
+    const allColors = seedColors.map(p=>p.colors).flat()
     const rand = Math.floor(Math.random() * allColors.length)
     const randomColor = allColors[rand]
     setColors([...colors, randomColor])
@@ -178,8 +179,17 @@ export default function NewPaletteForm(props) {
           <Typography variant="h4">Design Your Palette </Typography>
 
           <div className={styles.buttons}>
-            <Button className={styles.button} variant="contained" color="secondary" onClick={clearColors}>CLEAR PALETTE</Button>
-            <Button className={styles.button} variant="contained" color="primary"  onClick={addRandomColor} disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
+            <Button 
+              className={styles.button} 
+              variant="contained" 
+              color="secondary" 
+              onClick={clearColors}>CLEAR PALETTE</Button>
+            <Button 
+              className={styles.button} 
+              variant="contained" 
+              color="primary" 
+              onClick={addRandomColor} 
+              disabled={colors.length >= maxColors}>RANDOM COLOR</Button>
           </div>
           
           <ColorPickerForm 

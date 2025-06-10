@@ -1,5 +1,7 @@
 import styled from '@emotion/styled'
 import DeleteIcon from '@mui/icons-material/Delete';
+import chroma from 'chroma-js'
+import styles from './DraggableColorBox.module.css'
 
 const Root = styled.div`
   width:100%;
@@ -42,12 +44,16 @@ export default function DraggableColorBox(props){
   const handleClick = () =>{
     props.removeColor(name)
   }
+
+  const isDarkColor = chroma(color).luminance() <= 0.08
+  const isLightColor = chroma(color).luminance() >= 0.6
   
   return(
     <Root style={{backgroundColor:color}}>
       <BoxContent>
-        <span>{name}</span>
-        <DeleteIcon onClick={handleClick}/>
+        <span className={`${isDarkColor && styles.light_text}`}>{name}</span>
+        <DeleteIcon
+          onClick={handleClick}/>
       </BoxContent>
     </Root>
   )

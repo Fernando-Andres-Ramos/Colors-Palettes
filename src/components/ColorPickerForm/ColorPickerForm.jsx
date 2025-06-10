@@ -3,6 +3,8 @@ import styles from './ColorPickerForm.module.css'
 import {ChromePicker} from 'react-color'
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
+import chroma from 'chroma-js'
+
 
 export default class ColorPickerForm extends Component {
 
@@ -21,6 +23,9 @@ export default class ColorPickerForm extends Component {
       colors,
       maxColors,
     } = this.props
+
+    const isDarkColor = chroma(newColor).luminance() <= 0.08
+    const isLightColor = chroma(newColor).luminance() >= 0.7
 
     /* Custom validation */
     const isColorNameUnique = (inputValue) => {
@@ -60,7 +65,10 @@ export default class ColorPickerForm extends Component {
             className={styles.addColor}
             variant="contained" 
             color="primary"
-            style={{backgroundColor:`${colors.length >= maxColors ? "grey" : newColor }`}}
+            style={
+              {backgroundColor:`${colors.length >= maxColors ? "grey" : newColor }`,
+              color: isLightColor ? "black" : "white"}
+            }
             type="submit"
             disabled={colors.length >= maxColors}
             >

@@ -56,7 +56,6 @@ export default class ColorBox extends Component{
               <span className={`${styles.seeMore} ${isLightColor && styles.dark_text}`}>More</span>
           </Link>
         )}
-        
       </div>
     )
   }
