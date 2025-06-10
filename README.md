@@ -1,6 +1,6 @@
 # Colors Palettes
 
-### This is a project built with React and Vite. I coded it while taking Professor Cold Steel’s course. This version of the repository includes some different technologies, which I will name next.
+### This is a project built with React and Vite. I coded it while taking Professor [Colt Steel](https://linktr.ee/coltsteele)’s course. This version of the repository includes various technologies that I prefer to explore independently, which I will list next.
 
 #### Technologies and dependencies:
 * [React](https://react.dev/)
