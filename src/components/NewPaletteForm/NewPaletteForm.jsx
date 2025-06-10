@@ -116,11 +116,16 @@ export default function NewPaletteForm(props) {
   /* Choose a random color from all palettes */
   const addRandomColor = () => {
     const allColors = seedColors.map(p=>p.colors).flat()
-    const rand = Math.floor(Math.random() * allColors.length)
-    const randomColor = allColors[rand]
+    let rand
+    let randomColor
+    let isDuplicateColor = true
+    while(isDuplicateColor){
+      rand = Math.floor(Math.random() * allColors.length)
+      randomColor = allColors[rand]
+      isDuplicateColor = colors.some(color=>color.name===randomColor.name) 
+    }
     setColors([...colors, randomColor])
   }
-
   /* watch is a method from "useForm" hook */
   React.useEffect(() => {
     setColorName(watch("colorInput"))
