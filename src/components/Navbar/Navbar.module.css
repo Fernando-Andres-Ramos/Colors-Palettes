@@ -70,10 +70,15 @@
   margin-right: 1rem;
 }
 
-
 @media (max-width:767.98px){
   .slider_container{
     width: 220px;
+  }
+}
+
+@media (max-width:649.98px){
+  .slider_container{
+    width: 150px;
   }
 }
 
@@ -82,7 +87,8 @@
     display: none;
   }
 
-  .slider_container{
-    width: 150px;
+  .select{
+    max-width: 110px;
+    font-size: 1px;
   }
 }

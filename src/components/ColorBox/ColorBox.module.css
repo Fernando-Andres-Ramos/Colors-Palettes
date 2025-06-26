@@ -149,3 +149,15 @@
 .goBack .copy_button{
   opacity: 1;
 }
+
+@media (max-width:767.98px){
+  .box_content{
+    padding: 1%;
+  }
+}
+
+@media (max-width:575.98px){
+  .box_content{
+    padding: 0%;
+  }
+}
