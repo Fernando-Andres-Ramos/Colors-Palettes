@@ -3,6 +3,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion';
 import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import styled from '@emotion/styled'
+import {css} from '@emotion/react'
 import { red, blue } from '@mui/material/colors';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
@@ -14,6 +15,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import Button from '@mui/material/Button';
+
 
 const Root = styled.div`
   height: 100vh;
@@ -64,6 +67,13 @@ const PaletteList_Nav = styled.nav`
     text-decoration:none;
     color:white
   }
+
+  @media (max-width: 767.98px) {
+    flex-flow: column nowrap;
+    justify-contente:center;
+    align-items:center;
+    text-align:center;
+  }
 `
 const MotionPalettes = styled(motion.div)`
   box-sizing: border-box;
@@ -89,14 +99,56 @@ const Title = styled.h1`
   font-size: 2rem;
   font-weight: 800;
 `
+const NavButtons = styled.div`
+  width:420px;
+  height:35px
+  display:flex;
+  flex-flow:row nowrap;
+  place-content:center;
+
+  @media (max-width: 575.98px) {
+    width:250px;
+  }
+`
+
+const CustomButton = styled(Button)`
+  background-color:primary;
+  color:white;
+  width:50%;
+  height:100%;
+  font-size:12px;
+
+  @media (max-width: 767.98px) {
+    font-size:11px;;
+    width:50%;
+    height:100%;
+  }
+`
+
+const CustomButtonReset = styled(Button)`
+  background-color:#9423a8;
+  color:white;
+  width:50%;
+  height:100%;
+  font-size:12px;
+  &:hover{
+    background-color:#74128a
+  }
+
+  @media (max-width: 767.98px) {
+    font-size:11px;;
+    max-width:50%;
+    height:100%;
+  }
+`
 
 function PaletteList(props){
   const [unMount, setUnMount] = useState("")
   const {palettes, deletePalette} = props
   const [openDeleteDialog,setOpenDeleteDialog] = useState(false)
   const [deleteID, setDeleteID] = useState("")
-  const [id, setId] = useState("")
-  const navigate = useNavigate()
+/*   const [id, setId] = useState("")
+  const navigate = useNavigate() */
 
   function openDialog(id){
     setDeleteID(id)
@@ -117,12 +169,25 @@ function PaletteList(props){
     },1000)
   }
 
+  function handleReset(){
+    props.resetDefaultPalettes()
+  }
+
   return(  
     <Root>
       <PaletteList_Container>
         <PaletteList_Nav>
           <Title>React Colors</Title>
-          <Link to="/palette/new">Create New Palette</Link>
+          <NavButtons>
+            <CustomButtonReset variant='contained' onClick={handleReset}>
+                Reset Default Palettes
+            </CustomButtonReset>
+            <Link to="/palette/new">
+              <CustomButton variant='contained'>
+                Create New Palette
+              </CustomButton>
+            </Link>
+          </NavButtons>
         </PaletteList_Nav>
         <AnimatePresence>
           <MotionPalettes>
@@ -136,7 +201,7 @@ function PaletteList(props){
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0 }}
-                      >
+                        >
                         <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
                           <MiniPalette 
                             {...palette} 
