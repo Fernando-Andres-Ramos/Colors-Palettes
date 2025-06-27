@@ -54,7 +54,7 @@ class SingleColorPalette extends Component{
         <div className={styles.palette_colors}>
           {colorBoxes}
           <div className={styles2.goBack}>
-            <Link to={`/palette/${id}`} className={styles2.copy_button} >GO BACK</Link>
+            <Link to={`/palette/${id}`} className={styles2.copy_button}>GO BACK</Link>
           </div>
         </div>
         <PaletteFooter paletteName={paletteName} emoji={emoji}/>

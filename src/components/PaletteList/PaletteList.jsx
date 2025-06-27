@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion';
 import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import styled from '@emotion/styled'
@@ -12,6 +12,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
@@ -99,15 +101,11 @@ const Title = styled.h1`
   font-weight: 800;
 `
 const NavButtons = styled.div`
-  width:420px;
+  width:200px;
   height:35px
   display:flex;
   flex-flow:row nowrap;
   place-content:center;
-
-  @media (max-width: 575.98px) {
-    width:250px;
-  }
 `
 
 const CustomButton = styled(Button)`
@@ -172,11 +170,11 @@ function PaletteList(props){
           <Title>React Colors</Title>
           <NavButtons>
             <CustomButtonReset variant='contained' onClick={handleReset}>
-                Reset Default Palettes
+                <RestartAltIcon/>
             </CustomButtonReset>
             <Link to="/palette/new">
               <CustomButton variant='contained'>
-                Create New Palette
+                <AddBoxIcon/>
               </CustomButton>
             </Link>
           </NavButtons>

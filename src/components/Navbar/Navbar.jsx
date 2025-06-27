@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import {useState} from 'react';
 import styles from './Navbar.module.css'
 import {Link} from 'react-router-dom'
 import Select from '@mui/material/Select';
@@ -6,42 +6,36 @@ import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import useWindowSize from "../../hooks/useWindowSize.jsx"
 
 
-export default class Navbar extends Component{
-  constructor(props){
-    super(props)
+export default function Navbar(props){
 
-    this.state = {format:"hex", open:false}
+  const [format,setFormat] = useState("hex")
+  const [open,setOpen] = useState(false)
+  const [windowWidth, windowHeight] = useWindowSize()
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSelectChange = this.handleSelectChange.bind(this)
-    this.closeSnackBar = this.closeSnackBar.bind(this)
-
+  const handleChange = (e) =>{
+    props.changeLevel(e.target.value)
   }
 
-  handleChange(e){
-    this.props.changeLevel(e.target.value)
+  const handleSelectChange = (e) => {
+    setFormat(e.target.value)
+    setOpen(true)
+    props.changeSelectValue(e.target.value)
   }
 
-  handleSelectChange(e){
-    this.setState({format:e.target.value,open:true})
-    this.props.changeSelectValue(e.target.value)
-  }
-
-  closeSnackBar(){
-    this.setState({open:false})
+  const closeSnackBar = () => {
+    setOpen(false)
   }
   
+  const {defaultValue, isSingleColor} = props
 
-  render(){
-    const {defaultValue, isSingleColor} = this.props
     return(
       <header className={styles.navbar}>
         <div className={styles.logo}>
-          <Link to="/">ReactColorPicker</Link>
+          <Link to="/">{windowWidth>575.98?"ReactColorPicker":<KeyboardReturnIcon/>}</Link>
         </div>
         {
           isSingleColor && (
@@ -52,7 +46,7 @@ export default class Navbar extends Component{
                   min="100" 
                   max="900" 
                   defaultValue={`${defaultValue}`} 
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                   step="100"
                   className={styles.slider}/>
               </div>
@@ -60,7 +54,7 @@ export default class Navbar extends Component{
           )
         }
         <div className={styles.select_container}>
-          <Select className={styles.select} value={this.state.format} onChange={this.handleSelectChange}>
+          <Select className={styles.select} value={format} onChange={handleSelectChange}>
             <MenuItem  value="hex">HEX - #ffffff</MenuItem>
             <MenuItem  value="rgb">RGB - rgb(255,255,255)</MenuItem>
             <MenuItem  value="rgba">RGBA - rgba(255,255,255,0)</MenuItem>
@@ -68,25 +62,23 @@ export default class Navbar extends Component{
         </div>
         <Snackbar 
           anchorOrigin={{vertical:"bottom", horizontal:"left"}}
-          open={this.state.open}
+          open={open}
           autoHideDuration={3000}
-          message={<span id="message-id">Format Changed to {this.state.format}!</span>}
+          message={<span id="message-id">Format Changed to {format}!</span>}
           ContentProps={{
             "aria-describedby":"message-id"
           }}
-          onClose = {this.closeSnackBar}
+          onClose = {closeSnackBar}
           action={[
             <IconButton 
-              onClick={this.closeSnackBar} 
+              onClick={closeSnackBar} 
               color="inherit"
               key="close"
               aria-label="close">
               <CloseIcon/>
             </IconButton>
           ]}>
-
           </Snackbar>
       </header>
     )
-  }
 }
