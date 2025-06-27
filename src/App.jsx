@@ -1,7 +1,6 @@
 import React,{useEffect} from 'react'
 import {Route, Routes, Navigate, useLocation} from 'react-router-dom'
 import './App.css' 
-
 import Palette from './components/Palette/Palette.jsx'
 import PaletteList from './components/PaletteList/PaletteList.jsx'
 import SingleColorPalette from './components/SingleColorPalette/SingleColorPalette.jsx'
@@ -9,7 +8,6 @@ import NewPaletteForm from './components/NewPaletteForm/NewPaletteForm.jsx'
 import MotionDiv from './components/MotionDiv/MotionDiv.jsx'
 
 import { AnimatePresence } from 'framer-motion';
-
 import seedColors from './utilities/seedColors.js'
 import {generatePalette} from './utilities/colorHelpers.js'
 
@@ -20,7 +18,6 @@ function App() {
   const paletteId = pathSegments[2] || "";
   const colorId = pathSegments[3] || "";
   const [palettes, setPalettes] = React.useState(savedPalettes||seedColors)
-  
 
   function resetDefaultPalettes(){
     setPalettes(seedColors)
