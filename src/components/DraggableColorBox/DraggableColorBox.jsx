@@ -33,7 +33,17 @@ const BoxContent = styled.div`
   text-transform: uppercase;
   display:flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
+
+  @media (max-width: 575.98px) {
+    padding:8px;
+
+    &:hover svg{
+      color white;
+      fill: white;
+      transform:scale(1.1)
+    }
+  }
 `;
 
 
@@ -51,9 +61,11 @@ export default function DraggableColorBox(props){
   return(
     <Root style={{backgroundColor:color}}>
       <BoxContent>
-        <span className={`${isDarkColor && styles.light_text}`}>{name}</span>
-        <DeleteIcon
-          onClick={handleClick}/>
+          <span className={`${isDarkColor && styles.light_text}`}>{name}</span>
+          <div style={{width:"18px",height:"18px",alignSelf:"flex-end"}}>
+            <DeleteIcon
+              onClick={handleClick}/>
+          </div>
       </BoxContent>
     </Root>
   )
