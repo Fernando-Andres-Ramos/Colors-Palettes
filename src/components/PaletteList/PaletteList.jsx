@@ -3,7 +3,6 @@ import {Link, useNavigate} from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion';
 import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import styled from '@emotion/styled'
-import {css} from '@emotion/react'
 import { red, blue } from '@mui/material/colors';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
@@ -143,12 +142,9 @@ const CustomButtonReset = styled(Button)`
 `
 
 function PaletteList(props){
-  const [unMount, setUnMount] = useState("")
   const {palettes, deletePalette} = props
   const [openDeleteDialog,setOpenDeleteDialog] = useState(false)
   const [deleteID, setDeleteID] = useState("")
-/*   const [id, setId] = useState("")
-  const navigate = useNavigate() */
 
   function openDialog(id){
     setDeleteID(id)
@@ -162,11 +158,7 @@ function PaletteList(props){
 
   function handleRemovePalette(){
     setOpenDeleteDialog(false)
-    setUnMount(deleteID)
-    setTimeout(() => {
-      deletePalette(deleteID)
-      setDeleteID("")
-    },1000)
+    deletePalette(deleteID)
   }
 
   function handleReset(){
@@ -191,29 +183,25 @@ function PaletteList(props){
         </PaletteList_Nav>
         <AnimatePresence>
           <MotionPalettes>
-            {
-              palettes.map(palette => (
-                <AnimatePresence key={palette.id}>
-                  {
-                    unMount!=palette.id && (
-                      <motion.div
-                        key={palette.id}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0 }}
-                        >
-                        <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
-                          <MiniPalette 
-                            {...palette} 
-                            openDialog={openDialog} 
-                          />
-                        </Link>
-                      </motion.div>
-                    ) 
-                  }
-                </AnimatePresence>
-              ))
-            }
+            <AnimatePresence>
+              {
+                palettes.map(palette => (
+                  <motion.div
+                  key={palette.id}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  >
+                  <Link to={`/palette/${palette.id}`} style={{ textDecoration: 'none' }}>
+                    <MiniPalette 
+                      {...palette} 
+                      openDialog={openDialog} 
+                    />
+                  </Link>
+                </motion.div>   
+                ))
+              }
+            </AnimatePresence>
           </MotionPalettes>
         </AnimatePresence>
       </PaletteList_Container>

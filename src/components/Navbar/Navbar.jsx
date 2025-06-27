@@ -6,6 +6,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MenuItem from '@mui/material/MenuItem';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 
 export default class Navbar extends Component{

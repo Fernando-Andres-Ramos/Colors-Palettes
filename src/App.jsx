@@ -22,12 +22,8 @@ function App() {
   const [palettes, setPalettes] = React.useState(savedPalettes||seedColors)
   
 
-  /* Reset palettes to default. React detect the NOD references of the items it's the same before
-  For that resson, dont show "old" items with same nod-references. For that we do a deep reset with
-  a new const with new items-references to DOM */
   function resetDefaultPalettes(){
-    const reset = seedColors.map(item=>({...item}))
-    setPalettes(reset)
+    setPalettes(seedColors)
   }
 
   function findPalette(idToFind){
