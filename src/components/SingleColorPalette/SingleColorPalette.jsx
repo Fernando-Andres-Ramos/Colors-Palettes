@@ -1,21 +1,20 @@
-import { Component } from 'react';
+import { useState} from 'react';
 import {Link} from 'react-router-dom'
 import styles from './SingleColorPalette.module.css'
 import styles2 from '../ColorBox/ColorBox.module.css'
 import ColorBox from '../ColorBox/ColorBox.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
 import PaletteFooter from "../PaletteFooter/PaletteFooter.jsx"
+import useWindowSize from "../../hooks/useWindowSize.jsx"
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
-class SingleColorPalette extends Component{
+function SingleColorPalette(props){
 
-  constructor(props){
-    super(props)
-    this._shades = this.gatherShades(this.props.palette, this.props.colorId)
-    this.changeSelectValue = this.changeSelectValue.bind(this)
-    this.state=({format:"hex"})
-  }
+  const shades = gatherShades(props.palette, props.colorId)
+  const [format,setFormat] = useState("hex")
+  const [windowWidth, windowHeight] = useWindowSize()
 
-  gatherShades(palette, colorToFilterBy){
+  function gatherShades(palette, colorToFilterBy){
     let shades = [];
     let allColors = palette.colors;
     for(let key in allColors){
@@ -29,38 +28,37 @@ class SingleColorPalette extends Component{
     //return all the shades of a given color
   }
 
-  changeSelectValue(value){
-    this.setState({format:value})
+  function changeSelectValue(value){
+    setFormat(value)
   }
 
-  render(){
-    const {format} = this.state
-    const {emoji, paletteName, id} = this.props.palette
-    const colorBoxes = this._shades.map(color=>
-      <ColorBox 
-        key={color.name} 
-        name={color.name}
-        background={color[format]} 
-        showLink={false}
-        isSingleColor={true}
+  const {emoji,paletteName,id} = props.palette
+  const colorBoxes = shades.map(color=>
+    <ColorBox 
+      key={color.name} 
+      name={color.name}
+      background={color[format]} 
+      showLink={false}
+      isSingleColor={true}
+    />
+  )
+  return(
+    <div className={`${styles.palette}`}>
+      <Navbar
+        changeSelectValue={changeSelectValue}
+        isSingleColor={false}
       />
-    )
-    return(
-      <div className={`${styles.palette}`}>
-        <Navbar
-          changeSelectValue={this.changeSelectValue}
-          isSingleColor={false}
-        />
-        <div className={styles.palette_colors}>
-          {colorBoxes}
-          <div className={styles2.goBack}>
-            <Link to={`/palette/${id}`} className={styles2.copy_button}>GO BACK</Link>
-          </div>
+      <div className={styles.palette_colors}>
+        {colorBoxes}
+        <div className={styles2.goBack}>
+          <Link to={`/palette/${id}`} className={styles2.copy_button}>
+            {windowWidth>575.98?"GO BACK":<KeyboardBackspaceIcon/>}
+          </Link>
         </div>
-        <PaletteFooter paletteName={paletteName} emoji={emoji}/>
       </div>
-    )
-  }
+      <PaletteFooter paletteName={paletteName} emoji={emoji}/>
+    </div>
+  )
 }
 
 export default SingleColorPalette

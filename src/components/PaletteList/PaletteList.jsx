@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion';
 import MiniPalette from '../MiniPalette/MiniPalette.jsx'
 import styled from '@emotion/styled'
-import { red, blue } from '@mui/material/colors';
+import { red, blue, orange } from '@mui/material/colors';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -230,7 +230,7 @@ function PaletteList(props){
             <ListItem>
               <ListItemButton onClick={handleRemovePalette}>
                 <ListItemAvatar>
-                  <Avatar style={{backgroundColor:blue[100],color:blue[600]}}><CheckIcon/></Avatar>
+                  <Avatar style={{backgroundColor:blue[200],color:blue[600]}}><CheckIcon/></Avatar>
                 </ListItemAvatar>
                   <ListItemText>Delete</ListItemText>
               </ListItemButton>
@@ -238,7 +238,7 @@ function PaletteList(props){
             <ListItem>
               <ListItemButton onClick={closeDialog}>
                 <ListItemAvatar>
-                  <Avatar style={{backgroundColor:red[100],color:red[600]}}><CloseIcon/></Avatar>
+                  <Avatar style={{backgroundColor:red[200],color:red[600]}}><CloseIcon/></Avatar>
                 </ListItemAvatar>
                   <ListItemText>Cancel</ListItemText>
               </ListItemButton>
@@ -255,12 +255,13 @@ function PaletteList(props){
         disableRestoreFocus
       >
         <DialogTitle id="reset-dialog-title">
-          <strong style={{color:"orange"}}>WARNING!</strong> This will restore the palettes list to default mode.
+          <p><strong style={{color:"orange",textAlign:"center"}}>WARNING!</strong></p> 
+          <p>This will restore the palettes list to default mode.</p>
           <List>
             <ListItem>
               <ListItemButton onClick={handleReset}>
                 <ListItemAvatar>
-                  <Avatar style={{backgroundColor:blue[100],color:blue[600]}}><CheckIcon/></Avatar>
+                  <Avatar style={{backgroundColor:orange[200],color:orange[600]}}><RestartAltIcon/></Avatar>
                 </ListItemAvatar>
                   <ListItemText>Reset</ListItemText>
               </ListItemButton>
@@ -268,7 +269,7 @@ function PaletteList(props){
             <ListItem>
               <ListItemButton onClick={closeResetDialog}>
                 <ListItemAvatar>
-                  <Avatar style={{backgroundColor:red[100],color:red[600]}}><CloseIcon/></Avatar>
+                  <Avatar style={{backgroundColor:red[200],color:red[600]}}><CloseIcon/></Avatar>
                 </ListItemAvatar>
                   <ListItemText>Cancel</ListItemText>
               </ListItemButton>
