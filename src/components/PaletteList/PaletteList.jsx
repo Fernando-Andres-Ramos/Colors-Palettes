@@ -140,27 +140,40 @@ const CustomButtonReset = styled(Button)`
 `
 
 function PaletteList(props){
-  const {palettes, deletePalette} = props
-  const [openDeleteDialog,setOpenDeleteDialog] = useState(false)
+  const {palettes, deletePalette, resetDefaultPalettes} = props
+
+  const [deleteDialog,setDeleteDialog] = useState(false)
+  const [resetDialog,setResetDialog] = useState(false)
   const [deleteID, setDeleteID] = useState("")
+
+
+  function openResetDialog(){
+    setResetDialog(true)
+  }
+
+  function closeResetDialog(){
+    setResetDialog(false)
+  }
+
 
   function openDialog(id){
     setDeleteID(id)
-    setOpenDeleteDialog(true)
+    setDeleteDialog(true)
   }
 
   function closeDialog(e){
-    setOpenDeleteDialog(false)
+    setDeleteDialog(false)
     setDeleteID("")
   }
 
   function handleRemovePalette(){
-    setOpenDeleteDialog(false)
+    setDeleteDialog(false)
     deletePalette(deleteID)
   }
 
   function handleReset(){
-    props.resetDefaultPalettes()
+    setResetDialog(false)
+    resetDefaultPalettes()
   }
 
   return(  
@@ -169,7 +182,7 @@ function PaletteList(props){
         <PaletteList_Nav>
           <Title>React Colors</Title>
           <NavButtons>
-            <CustomButtonReset variant='contained' onClick={handleReset}>
+            <CustomButtonReset variant='contained' onClick={openResetDialog}>
                 <RestartAltIcon/>
             </CustomButtonReset>
             <Link to="/palette/new">
@@ -206,7 +219,7 @@ function PaletteList(props){
 
       <Dialog 
         onClose={closeDialog} 
-        open={openDeleteDialog} 
+        open={deleteDialog} 
         aria-labelledby="delete-dialog-title"
         disableEnforceFocus
         disableRestoreFocus
@@ -224,6 +237,36 @@ function PaletteList(props){
             </ListItem>
             <ListItem>
               <ListItemButton onClick={closeDialog}>
+                <ListItemAvatar>
+                  <Avatar style={{backgroundColor:red[100],color:red[600]}}><CloseIcon/></Avatar>
+                </ListItemAvatar>
+                  <ListItemText>Cancel</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </DialogTitle>
+      </Dialog>
+
+      <Dialog 
+        onClose={closeResetDialog} 
+        open={resetDialog} 
+        aria-labelledby="reset-dialog-title"
+        disableEnforceFocus
+        disableRestoreFocus
+      >
+        <DialogTitle id="reset-dialog-title">
+          <strong style={{color:"orange"}}>WARNING!</strong> This will restore the palettes list to default mode.
+          <List>
+            <ListItem>
+              <ListItemButton onClick={handleReset}>
+                <ListItemAvatar>
+                  <Avatar style={{backgroundColor:blue[100],color:blue[600]}}><CheckIcon/></Avatar>
+                </ListItemAvatar>
+                  <ListItemText>Reset</ListItemText>
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton onClick={closeResetDialog}>
                 <ListItemAvatar>
                   <Avatar style={{backgroundColor:red[100],color:red[600]}}><CloseIcon/></Avatar>
                 </ListItemAvatar>
